@@ -1,0 +1,168 @@
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<!-- NAVBAR -->
+<nav class="lnav">
+  <div class="wrap">
+    <div class="lnav-inner">
+      <a href="/" class="brand"><div class="brand-ic"><i class="bi bi-journal-text"></i></div><span>Ask<em>Paper</em>Gen</span></a>
+      <ul class="lnav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+      </ul>
+      <div class="lnav-actions">
+        <a href="/Auth/Login" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="/Auth/Register" class="btn btn-primary btn-sm">Get Started Free</a>
+      </div>
+      <button class="lnav-toggle" id="lnav-toggle" onclick="document.getElementById('mob-nav').classList.toggle('open')"><i class="bi bi-list"></i></button>
+    </div>
+    <div class="mob-nav" id="mob-nav">
+      <a href="#features">Features</a><a href="#how">How It Works</a>
+      <div class="mn-div"></div>
+      <a href="/Auth/Login">Sign In</a>
+      <a href="/Auth/Register" class="btn btn-primary btn-sm" style="text-align:center;margin-top:4px">Get Started Free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+      <div>
+        <div class="hero-badge"><span class="hero-badge-dot" style="width:5px;height:5px;border-radius:50%;background:var(--blue)"></span> No paper saving · Direct PDF export</div>
+        <h1 class="hero-hl">Create Professional <span class="hero-hl ac">Exam Papers</span> in Minutes</h1>
+        <p class="hero-sub">Template-driven paper generation with full English &amp; Urdu (Nastaliq) support, live preview, and instant PDF download.</p>
+        <div class="hero-ctas">
+          <a href="/Auth/Register" class="btn btn-primary btn-lg"><i class="bi bi-rocket-takeoff"></i> Start for Free</a>
+          <a href="/Auth/Login"    class="btn btn-secondary btn-lg">Sign In</a>
+        </div>
+        <div class="hero-trust">
+          <div class="hero-ti"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> MCQ, Short &amp; Long</div>
+          <span class="hero-ts">·</span>
+          <div class="hero-ti"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> English &amp; Urdu</div>
+          <span class="hero-ts">·</span>
+          <div class="hero-ti"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> Instant PDF</div>
+        </div>
+      </div>
+      <div>
+        <div class="pmock">
+          <div class="pmock-rdy"><i class="bi bi-check-circle-fill"></i> PDF Ready</div>
+          <div class="pm-school">University of Technology</div>
+          <div class="pm-title">MID-TERM EXAMINATION 2025</div>
+          <div class="pm-meta"><span>Marks: 100</span><span>Duration: 3h</span><span>CS-301</span></div>
+          <div class="pm-sec">Section A – MCQs</div>
+          <div class="pm-q"><span class="pm-qn">Q1.</span><span class="pm-qt">Which data structure uses LIFO? (A) Queue (B) Stack (C) Tree (D) Graph</span><span class="pm-qm">[1]</span></div>
+          <div class="pm-q"><span class="pm-qn">Q2.</span><span class="pm-qt">What is the time complexity of binary search?</span><span class="pm-qm">[1]</span></div>
+          <div class="pm-sec">Section B – Short Questions</div>
+          <div class="pm-q"><span class="pm-qn">Q1.</span><span class="pm-qt">Define linked list and explain its types with examples.</span><span class="pm-qm">[5]</span></div>
+          <div class="pm-line"></div>
+          <div class="pm-foot">AskPaperGen · Page 1 of 1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof">
+  <div class="wrap">
+    <div class="proof-inner">
+      <div class="proof-stat"><strong>5+</strong><span>Built-in Templates</span></div>
+      <div class="proof-div"></div>
+      <div class="proof-stat"><strong>EN+UR</strong><span>Language Support</span></div>
+      <div class="proof-div"></div>
+      <div class="proof-stat"><strong>6</strong><span>Question Types</span></div>
+      <div class="proof-div"></div>
+      <div class="proof-stat"><strong>PDF</strong><span>Instant Export</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="sec-pad" id="features">
+  <div class="wrap">
+    <div class="text-c">
+      <div class="sec-pill"><i class="bi bi-stars" style="margin-right:5px"></i> Features</div>
+      <h2 class="sec-hl">Everything You Need</h2>
+      <p class="sec-sub" style="margin:0 auto">Built for educators, tutors, and institutions</p>
+    </div>
+    <div class="feats-grid">
+      @foreach (var f in new[]{
+        ("bi-layout-text-window-reverse","Template System","Admin-controlled templates for English, Urdu, Science, Math — select once, paper structure auto-fills."),
+        ("bi-translate","Urdu + English","Full Noto Nastaliq Urdu RTL support. Switch language with one click."),
+        ("bi-list-check","6 Question Types","MCQ (A–D), Short, Long, Fill in Blank, True/False — all with optional images."),
+        ("bi-eye","Live Preview","Real-time A4 paper preview that matches the final PDF exactly."),
+        ("bi-filetype-pdf","PDF Export","Generate a clean, print-ready PDF instantly — no saving required."),
+        ("bi-palette","Custom Design","Choose colors, fonts, header style, section style — all live in the designer."),
+      }) {
+        <div class="feat">
+          <div class="feat-ic"><i class="bi @f.Item1"></i></div>
+          <h3>@f.Item2</h3>
+          <p>@f.Item3</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec-pad bg-surf" id="how">
+  <div class="wrap">
+    <div class="text-c">
+      <div class="sec-pill"><i class="bi bi-play-circle" style="margin-right:5px"></i> How It Works</div>
+      <h2 class="sec-hl">Three Simple Steps</h2>
+    </div>
+    <div class="steps-grid">
+      @foreach (var s in new[]{
+        ("1","Pick a Template","Choose from built-in templates for English or Urdu exams. The section structure, default marks, and design load automatically."),
+        ("2","Add Your Questions","Type questions directly — MCQ, short, long, fill-in, or true/false. Add images. Reorder anytime."),
+        ("3","Export PDF","Click Export PDF for an instant, print-ready download. No account storage, no waiting."),
+      }) {
+        <div class="step"><div class="step-num">@s.Item1</div><h3>@s.Item2</h3><p>@s.Item3</p></div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="wrap inner">
+    <h2>Ready to Create Your First Paper?</h2>
+    <p>Join educators who use AskPaperGen to save hours of formatting time.</p>
+    <div class="cta-btns">
+      <a href="/Auth/Register" class="btn btn-white btn-lg"><i class="bi bi-rocket-takeoff"></i> Create Paper Now — Free</a>
+      <a href="/Auth/Login"    class="btn btn-ghost-white btn-lg">Sign In</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+      <div>
+        <div class="footer-brand"><div class="brand-ic"><i class="bi bi-journal-text"></i></div> AskPaperGen</div>
+        <div class="footer-desc">Professional exam paper generation for educators. Template-driven. No paper storage.</div>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="/Auth/Register">Get Started</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Account</h4>
+        <ul class="footer-links">
+          <li><a href="/Auth/Login">Sign In</a></li>
+          <li><a href="/Auth/Register">Create Account</a></li>
+          <li><a href="/Dashboard">Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© @DateTime.Now.Year AskPaperGen</span>
+      <span><a href="/Auth/Login">Sign In</a> · <a href="/Auth/Register">Register</a></span>
+    </div>
+  </div>
+</footer>

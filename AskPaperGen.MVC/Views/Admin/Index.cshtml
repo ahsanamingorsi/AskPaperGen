@@ -1,0 +1,63 @@
+@model AdminDashVm
+@{ ViewData["Title"] = "Admin Dashboard"; Layout = "~/Views/Shared/_DashLayout.cshtml"; }
+
+<div class="page-hd">
+  <div><h2><i class="bi bi-shield-fill-check" style="color:var(--blue);margin-right:8px"></i>Admin Dashboard</h2><p>Manage templates, users and system settings</p></div>
+  <div style="display:flex;gap:8px">
+    <a href="@Url.Action("NewTemplate","Admin")" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> New Template</a>
+    <a href="@Url.Action("Settings","Admin")" class="btn btn-secondary btn-sm"><i class="bi bi-gear"></i> Settings</a>
+  </div>
+</div>
+
+@if (Model.SaveDisabled) {
+  <div class="notice notice-warn mb4" style="margin-bottom:1.5rem">
+    <i class="bi bi-shield-exclamation"></i>
+    <span><strong>Paper saving is disabled.</strong> @Model.SaveDisabledMsg</span>
+    <a href="@Url.Action("Settings","Admin")" style="margin-left:auto;white-space:nowrap;font-weight:600;color:var(--amber)">Change →</a>
+  </div>
+}
+
+<div class="stats-row" style="margin-bottom:24px">
+  <div class="stat"><div class="stat-ic" style="background:var(--blue-l);color:var(--blue)"><i class="bi bi-people-fill"></i></div><div class="stat-val">@Model.TotalUsers</div><div class="stat-lbl">Total Users</div></div>
+  <div class="stat"><div class="stat-ic" style="background:var(--green-l);color:var(--green)"><i class="bi bi-person-check-fill"></i></div><div class="stat-val">@Model.ActiveUsers</div><div class="stat-lbl">Active Users</div></div>
+  <div class="stat"><div class="stat-ic" style="background:var(--purple-l);color:var(--purple)"><i class="bi bi-layout-text-window-reverse"></i></div><div class="stat-val">@Model.TotalTemplates</div><div class="stat-lbl">Templates</div></div>
+</div>
+
+<div class="row row-2" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-hd">
+      <div class="card-hd-left"><div class="card-icon ci-purple"><i class="bi bi-layout-text-window-reverse"></i></div><div class="card-title">Template Management</div></div>
+      <a href="@Url.Action("Templates","Admin")" class="btn btn-secondary btn-sm">View All</a>
+    </div>
+    <div class="card-body">
+      <p style="font-size:.875rem;color:var(--ink3);margin-bottom:14px">Create and edit templates. Control colors, fonts, layout, section presets, and Urdu support.</p>
+      <div style="display:flex;gap:8px">
+        <a href="@Url.Action("NewTemplate","Admin")" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> New Template</a>
+        <a href="@Url.Action("Templates","Admin")" class="btn btn-secondary btn-sm"><i class="bi bi-list-ul"></i> All Templates</a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hd">
+      <div class="card-hd-left"><div class="card-icon ci-blue"><i class="bi bi-people-fill"></i></div><div class="card-title">Recent Users</div></div>
+      <a href="@Url.Action("Users","Admin")" class="btn btn-secondary btn-sm">View All</a>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>User</th><th>Status</th></tr></thead>
+        <tbody>
+        @foreach (var u in Model.RecentUsers) {
+          <tr>
+            <td><div class="t-name">@u.FullName</div><div style="font-size:.75rem;color:var(--ink4)">@u.Email</div></td>
+            <td>@if(u.IsActive){<span class="chip chip-green">Active</span>}else{<span class="chip chip-red">Off</span>}</td>
+          </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+<style>@@media(max-width:680px){.row-2{grid-template-columns:1fr!important}}</style>
+}

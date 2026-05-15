@@ -1,0 +1,70 @@
+@model DashboardVm
+@{ ViewData["Title"] = "Dashboard"; Layout = "~/Views/Shared/_DashLayout.cshtml"; }
+
+<!-- Hero -->
+<div class="dash-hero">
+  <div style="position:relative;z-index:1">
+    <h1>Hello, @Model.UserName.Split(' ')[0]! 👋</h1>
+    <p>@(Model.Institution ?? "Ready to create a professional exam paper?") · @DateTime.Now.ToString("dddd, MMMM d")</p>
+    <div class="dash-hero-btns">
+      <a href="@Url.Action("Create","Paper")"><button class="btn-white"><i class="bi bi-plus-lg"></i> New Paper</button></a>
+      <a href="@Url.Action("MyTemplates","Dashboard")"><button class="btn-ghost-white"><i class="bi bi-layout-text-window"></i> Templates</button></a>
+    </div>
+  </div>
+</div>
+
+@if (Model.SaveDisabled) {
+  <div class="notice notice-warn mb4" style="margin-bottom:1.5rem">
+    <i class="bi bi-shield-exclamation"></i>
+    <span>@Model.SaveDisabledMsg</span>
+  </div>
+}
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat"><div class="stat-ic" style="background:var(--blue-l);color:var(--blue)"><i class="bi bi-layout-text-window-reverse"></i></div><div class="stat-val">@Model.TotalTemplates</div><div class="stat-lbl">Templates Available</div></div>
+  <div class="stat"><div class="stat-ic" style="background:var(--green-l);color:var(--green)"><i class="bi bi-filetype-pdf"></i></div><div class="stat-val">PDF</div><div class="stat-lbl">Instant Export</div></div>
+  <div class="stat"><div class="stat-ic" style="background:var(--purple-l);color:var(--purple)"><i class="bi bi-translate"></i></div><div class="stat-val">EN+UR</div><div class="stat-lbl">Language Support</div></div>
+</div>
+
+<!-- Templates -->
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+  <div>
+    <h3 style="font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink);margin-bottom:2px"><i class="bi bi-layout-text-window-reverse" style="color:var(--blue);margin-right:6px"></i>Available Templates</h3>
+    <p style="font-size:.8rem;color:var(--ink3);margin:0">Pick a template to start generating your paper</p>
+  </div>
+  <a href="@Url.Action("MyTemplates","Dashboard")" class="btn btn-secondary btn-sm">View All</a>
+</div>
+
+@if (!Model.AllTemplates.Any()) {
+  <div class="empty-box">
+    <div class="empty-icon">🗂️</div>
+    <h4>No templates yet</h4>
+    <p>Templates will appear here once an admin creates them.</p>
+  </div>
+} else {
+  var icons = new Dictionary<string,string>{ ["English"]="📄",["Urdu"]="📜",["Science"]="🔬",["Math"]="📐",["Custom"]="⚙️" };
+  <div class="tmpl-grid">
+  @foreach (var t in Model.AllTemplates.Take(8)) {
+    <div class="tmpl-card">
+      <div class="tmpl-thumb @(t.ThumbnailClass ?? "tmpl-custom")">
+        <span>@(icons.GetValueOrDefault(t.Category??"","📋"))</span>
+        <span class="tmpl-lang">@(t.Language??"EN")</span>
+      </div>
+      <div class="tmpl-info">
+        <div class="tmpl-name">@t.Name</div>
+        @if (!string.IsNullOrEmpty(t.Description)) { <div class="tmpl-desc">@t.Description</div> }
+        <div class="tmpl-tags">
+          @if (!string.IsNullOrEmpty(t.Category)) { <span class="tmpl-tag">@t.Category</span> }
+          @if (t.IsBuiltIn) { <span class="tmpl-tag" style="background:var(--blue-l);color:var(--blue);border-color:var(--blue-m)">Built-in</span> }
+        </div>
+      </div>
+      <div class="tmpl-acts">
+        <a href="@Url.Action("Create","Paper",new{templateId=t.Id})" class="btn btn-primary btn-sm w-full" style="justify-content:center">
+          <i class="bi bi-lightning-charge-fill"></i> Use Template
+        </a>
+      </div>
+    </div>
+  }
+  </div>
+}

@@ -1,0 +1,49 @@
+@model List<UserListItem>
+@{ ViewData["Title"] = "Manage Users"; Layout = "~/Views/Shared/_DashLayout.cshtml"; }
+
+<div class="page-hd">
+  <div><h2><i class="bi bi-people-fill" style="color:var(--blue);margin-right:8px"></i>Users</h2><p>@Model.Count registered user@(Model.Count!=1?"s":"")</p></div>
+  <input type="text" id="usrSearch" class="input" style="width:220px;max-width:100%" placeholder="🔍 Search…"/>
+</div>
+
+<div class="card">
+  <div style="overflow-x:auto">
+    <table class="tbl" id="usrTable">
+      <thead><tr><th>User</th><th>Institution</th><th>Joined</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      @foreach (var u in Model) {
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:9px">
+              <div class="avatar" style="width:30px;height:30px;font-size:.7rem;flex-shrink:0">@(u.Initials??"?")</div>
+              <div><div class="t-name">@u.FullName</div><div style="font-size:.75rem;color:var(--ink4)">@u.Email</div></div>
+            </div>
+          </td>
+          <td style="color:var(--ink3);font-size:.85rem">@(u.Institution??"—")</td>
+          <td style="font-size:.8rem;color:var(--ink4)">@u.CreatedAt.ToString("MMM d, yyyy")</td>
+          <td>@if(u.IsActive){<span class="chip chip-green">Active</span>}else{<span class="chip chip-red">Inactive</span>}</td>
+          <td>
+            <div style="display:flex;gap:6px">
+              <form asp-action="ToggleUser" asp-route-id="@u.Id" method="post" style="display:inline">@Html.AntiForgeryToken()
+                <button class="btn-icon" title="@(u.IsActive?"Deactivate":"Activate")"><i class="bi bi-@(u.IsActive?"pause-circle":"play-circle")"></i></button>
+              </form>
+              <form asp-action="DeleteUser" asp-route-id="@u.Id" method="post" style="display:inline" onsubmit="return confirm('Delete this user permanently?')">@Html.AntiForgeryToken()
+                <button class="btn-icon danger" title="Delete"><i class="bi bi-trash"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@section Scripts {
+<script>
+document.getElementById('usrSearch')?.addEventListener('input',function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll('#usrTable tbody tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(q)?'':'none');
+});
+</script>
+}

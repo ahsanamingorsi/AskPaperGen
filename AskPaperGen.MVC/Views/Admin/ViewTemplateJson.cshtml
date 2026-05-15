@@ -1,0 +1,12 @@
+@{ ViewData["Title"] = "Template JSON"; Layout = "~/Views/Shared/_DashLayout.cshtml"; }
+<div class="page-hd">
+  <div><h2><i class="bi bi-braces" style="color:var(--blue);margin-right:8px"></i>@ViewBag.Name</h2><p>Raw template settings JSON</p></div>
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('jv').textContent).then(()=>alert('Copied!'))"><i class="bi bi-clipboard"></i> Copy</button>
+    <a href="@Url.Action("Templates","Admin")" class="btn btn-ghost btn-sm"><i class="bi bi-arrow-left"></i> Back</a>
+  </div>
+</div>
+<div class="card"><pre class="json-view" id="jv">@ViewBag.Json</pre></div>
+@section Scripts {
+<script>try{const v=document.getElementById('jv');v.textContent=JSON.stringify(JSON.parse(v.textContent),null,2);}catch{}</script>
+}

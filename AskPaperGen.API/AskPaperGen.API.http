@@ -1,0 +1,6 @@
+@AskPaperGen.API_HostAddress = http://localhost:5278
+
+GET {{AskPaperGen.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
