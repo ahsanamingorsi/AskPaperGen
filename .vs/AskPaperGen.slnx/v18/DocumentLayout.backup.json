@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|c:\\users\\user\\source\\repos\\askpapergen\\askpapergen.mvc\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|solutionrelative:askpapergen.mvc\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|c:\\users\\user\\source\\repos\\askpapergen\\askpapergen.mvc\\models\\schema\\paperdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|solutionrelative:askpapergen.mvc\\models\\schema\\paperdocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|c:\\users\\user\\source\\repos\\askpapergen\\askpapergen.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55AD5A73-AF5B-4B11-8FB4-FC3124D86B55}|AskPaperGen.MVC\\AskPaperGen.MVC.csproj|solutionrelative:askpapergen.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +31,43 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "AskPaperGen.MVC\\Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "AskPaperGen.MVC\\Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-25T07:26:30.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PaperDocument.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Models\\Schema\\PaperDocument.cs",
+              "RelativeDocumentMoniker": "AskPaperGen.MVC\\Models\\Schema\\PaperDocument.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Models\\Schema\\PaperDocument.cs",
+              "RelativeToolTip": "AskPaperGen.MVC\\Models\\Schema\\PaperDocument.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-25T07:26:26.319Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Program.cs",
+              "RelativeDocumentMoniker": "AskPaperGen.MVC\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\AskPaperGen\\AskPaperGen.MVC\\Program.cs",
+              "RelativeToolTip": "AskPaperGen.MVC\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-25T07:23:33.869Z"
             }
           ]
         }

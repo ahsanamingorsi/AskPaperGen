@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AskPaperGen — Create. Format. Print.</title>
+<style>
+:root{--navy:#0b1f4b;--blue:#2563eb;--cyan:#06b6d4;--bg:#eef3fb;--card:rgba(255,255,255,.72);--bd:rgba(11,31,75,.1);--sh:0 10px 30px rgba(11,31,75,.1);--r:16px}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 Inter,system-ui,Segoe UI,Roboto,sans-serif;color:var(--navy);background:radial-gradient(900px 500px at 10% -10%,#cfe3ff,transparent),radial-gradient(700px 400px at 100% 0,#c9f3fb,transparent),var(--bg);min-height:100vh}
+h1,h2,h3{margin:0;line-height:1.2}a{color:inherit;text-decoration:none}
+.glass{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);box-shadow:var(--sh);border-radius:var(--r)}
+.btn{border:1px solid var(--bd);background:#fff;color:var(--navy);padding:9px 14px;border-radius:11px;font:600 13px inherit;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,31,75,.12)}
+.btn.p{background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;border:0}.btn.c{background:var(--cyan);color:#022;border:0}.btn.d{color:#b91c1c}.btn.s{padding:5px 9px;font-size:12px}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:6px;padding:10px 22px;margin:10px;border-radius:16px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;margin-right:auto}.logo svg{width:32px;height:32px}
+nav a.l{padding:8px 12px;border-radius:10px;font-weight:600;font-size:14px;color:#334}nav a.l:hover,nav a.l.on{background:rgba(37,99,235,.1);color:var(--blue)}
+#burger{display:none}nav .links{display:contents}
+.page{display:none}.page.on{display:block}.wrap{max-width:1180px;margin:0 auto;padding:20px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;padding:40px 0}
+.hero h1{font-size:44px;letter-spacing:-1px}.hero p{font-size:17px;color:#40527a;margin:14px 0 22px}.tag{color:var(--cyan);font-weight:700;letter-spacing:2px;font-size:12px;text-transform:uppercase}
+.mock{height:430px;overflow:hidden;padding:14px;position:relative}.mock .pv{transform:scale(.5);transform-origin:top left;width:210mm}
+.grid{display:grid;gap:14px}.g5{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.feat{padding:18px}.feat b{display:block;margin-bottom:4px}.feat span{color:#52638a;font-size:13px}.ico{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+h2.t{font-size:28px;margin:46px 0 16px}
+/* generator */
+.gen{display:grid;grid-template-columns:330px 1fr 290px;gap:12px;padding:0 12px 12px;height:calc(100vh - 78px)}
+.panel{padding:14px;overflow:auto}.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#52638a;margin:12px 0 8px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.center{overflow:auto;padding:18px;background:rgba(11,31,75,.06);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;gap:10px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%;justify-content:space-between}
+.stat{font-size:12px;color:#0a7a50;font-weight:700}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:9px;font:13px inherit;background:#fff;color:var(--navy)}
+textarea{min-height:52px;resize:vertical}input[type=color]{padding:2px;height:34px}input[type=range]{padding:0}
+label.f{display:block;font-size:12px;font-weight:600;color:#52638a;margin:7px 0 3px}label.k{display:flex;gap:8px;align-items:center;font-weight:600;margin:8px 0}label.k input{width:auto}
+.item{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px;margin:8px 0}.item.over{outline:2px dashed var(--cyan)}
+.ih{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-weight:700;font-size:12px}.ih .h{cursor:grab;color:#889;font-size:16px}.ih .sp{margin-left:auto;display:flex;gap:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.te input{padding:4px 6px;font-size:12px}.te{border-spacing:3px;width:100%}
+.empty{text-align:center;color:#778;padding:22px;border:2px dashed var(--bd);border-radius:12px;font-size:13px}
+.tabs{display:none}
+/* paper */
+.pv{background:#fff;color:var(--tx,#000);box-shadow:0 8px 28px rgba(0,0,0,.18);flex:none;overflow:hidden}
+.pv .hd{margin-bottom:10px;padding-bottom:8px}.pv .hd.bottom{border-bottom:2px solid var(--bd)}.pv .hd.box{border:2px solid var(--bd);padding:10px}.pv .hd.double{border-bottom:5px double var(--bd)}
+.pv .inst{font-weight:800;color:var(--pr);text-transform:uppercase}.pv .exam{font-weight:700;color:var(--ac)}.pv .logo2{margin-bottom:4px;max-width:none;vertical-align:middle}.pv .hd.lgs{display:flex!important;align-items:center;gap:14px}.pv .ht{flex:1;min-width:0}.pv .hs-split .ht{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pv .mt{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:2px 14px;font-size:.9em;margin:10px 0;padding:6px 0;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.pv .mt b{color:var(--pr)}.pv .q{margin:9px 0;display:flex;gap:6px;justify-content:space-between;break-inside:avoid}.pv .qb{flex:1}.pv .qm{white-space:nowrap;font-weight:700;color:var(--pr)}
+.pv .qs-box .q{border:1px solid var(--bd);padding:6px 8px;border-radius:4px}.pv .qs-under .q{border-bottom:1px solid var(--bd);padding-bottom:6px}.pv .qs-min .q{margin:5px 0}
+.pv .opts{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin-top:3px}.pv .ln{border-bottom:1px solid #999;height:1.7em}
+.pv .sec{margin:16px 0 6px;font-size:var(--hs);font-weight:800;text-transform:uppercase;display:flex;justify-content:space-between}.pv .si{font-style:italic;margin-bottom:6px;font-size:.92em}
+.pv .sec-simple{color:var(--pr)}.pv .sec-box{border:2px solid var(--pr);padding:4px 10px;color:var(--pr)}.pv .sec-color{background:var(--pr);color:#fff;padding:4px 10px;border-radius:4px}.pv .sec-under{border-bottom:2px solid var(--pr);color:var(--pr)}
+.pv .ins{border:1px dashed var(--bd);padding:6px 10px;font-size:.92em;margin:8px 0}.pv table.tb{border-collapse:collapse;width:100%;margin:8px 0}.pv .tb td{border:1px solid var(--tx);padding:4px 6px}.pv img.im{max-width:100%;max-height:260px;display:block;margin:8px auto}
+.pv[dir=rtl] .opts{direction:rtl}
+/* templates */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.chip{padding:6px 12px;border-radius:99px;border:1px solid var(--bd);background:#fff;font-weight:600;font-size:13px;cursor:pointer}.chip.on{background:var(--blue);color:#fff}
+.tc{padding:12px}.tc .th{height:230px;overflow:hidden;border-radius:10px;background:#dfe7f5;margin-bottom:10px;position:relative}.tc .th .pv{transform:scale(.3);transform-origin:top left;width:210mm;box-shadow:none}
+.tc small{color:#52638a}.acts{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.modal{position:fixed;inset:0;background:rgba(5,15,40,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:14px}.modal.on{display:flex}
+.mb{max-height:94vh;overflow:auto;padding:16px;background:#e8eef9;border-radius:18px;max-width:96vw}.mb .pv{margin:auto}
+#designer{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;grid-template-columns:300px 1fr 280px;gap:12px;padding:12px}#designer.on{display:grid}#designer>*{overflow:auto;min-height:0}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:grid;gap:6px;z-index:200}.toast{background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;box-shadow:var(--sh);font-size:13px}
+footer{text-align:center;color:#52638a;padding:30px;font-size:13px}
+@media(max-width:1100px){.gen{grid-template-columns:280px 1fr}.gen .rp{position:fixed;right:0;top:70px;bottom:0;width:290px;z-index:60;transform:translateX(105%);transition:.25s}.gen .rp.open{transform:none}#designer{grid-template-columns:260px 1fr}#designer .dr{display:none}}
+@media(max-width:760px){
+nav{flex-wrap:wrap}#burger{display:block}nav .links{display:none;width:100%;flex-direction:column}nav .links.open{display:flex}
+.hero{grid-template-columns:1fr}.hero h1{font-size:30px}.mock{height:300px}
+.gen{display:block;height:auto;padding:0 8px 70px}.gen .lp,.gen .rp{display:none;position:static;width:auto;transform:none;margin-bottom:10px}.gen[data-t=content] .lp,.gen[data-t=settings] .rp{display:block}.gen[data-t=preview] .lp,.gen[data-t=preview] .rp{display:none}.gen[data-t=content] .center,.gen[data-t=settings] .center{display:none}.center{padding:8px;overflow:auto}
+.tabs{display:flex;position:fixed;bottom:8px;left:8px;right:8px;z-index:70;padding:6px;gap:4px}.tabs button{flex:1}.tabs .on{background:var(--blue);color:#fff}
+#designer{display:none;grid-template-columns:1fr;overflow:auto}#designer.on{display:block}#designer>*{margin-bottom:10px;overflow:visible}}
+
+.pv .hs-banner,.pv .hs-gradient{border:none!important;color:#fff;padding:16px!important;border-radius:6px}.pv .hs-banner{background:var(--pr)}.pv .hs-gradient{background:linear-gradient(135deg,var(--pr),var(--ac));border-radius:12px}
+.pv .hs-banner .inst,.pv .hs-banner .exam,.pv .hs-gradient .inst,.pv .hs-gradient .exam{color:#fff}
+.pv .hs-split{display:flex;justify-content:space-between;align-items:center;gap:12px;border:none!important;border-bottom:3px solid var(--ac)!important;text-align:left!important}.pv .hs-split br{display:none}.pv .hs-split .exam{padding:4px 12px;background:var(--ac);color:#fff;border-radius:99px;font-size:.8em!important}
+.pv .hs-ribbon{border:none!important}.pv .hs-ribbon .exam{display:inline-block;background:var(--ac);color:#fff;padding:3px 26px;margin-top:6px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%)}
+.pv .hs-modern{border:none!important;border-inline-start:6px solid var(--ac)!important;padding-inline-start:12px!important;text-align:start!important}
+.pv .hs-seal{border:none!important;border-top:4px solid var(--pr)!important;border-bottom:1px solid var(--pr)!important;position:relative;padding-top:14px!important}.pv .hs-seal::before{content:'✦ ✦ ✦';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#fff;padding:0 8px;color:var(--ac);font-size:11px;letter-spacing:4px}
+/* premium glass + motion */
+body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(90px);opacity:.3;z-index:-1;pointer-events:none}
+body::before{width:460px;height:460px;background:var(--cyan);top:-120px;right:-80px;animation:orb 16s ease-in-out infinite}body::after{width:520px;height:520px;background:var(--blue);bottom:-180px;left:-120px;animation:orb 20s ease-in-out infinite reverse}
+@keyframes orb{50%{transform:translate(60px,40px) scale(1.15)}}@keyframes up{from{opacity:0;transform:translateY(18px)}}@keyframes flt{50%{transform:translateY(-12px)}}@keyframes pop{from{opacity:0;transform:scale(.94)}}@keyframes sl{from{opacity:0;transform:translateY(14px)}}@keyframes gl{to{background-position:200% 0}}
+.glass{background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.45));backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 #fff,0 14px 40px rgba(11,31,75,.12)}
+.feat,.tc{transition:.35s cubic-bezier(.2,.8,.2,1)}.feat:hover,.tc:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 #fff,0 22px 50px rgba(37,99,235,.22)}.feat:hover .ico{transform:rotate(-8deg) scale(1.1)}.ico{transition:.35s}
+.page.on{animation:up .55s both}.grid>*{animation:up .6s both}.grid>*:nth-child(2){animation-delay:.06s}.grid>*:nth-child(3){animation-delay:.12s}.grid>*:nth-child(4){animation-delay:.18s}.grid>*:nth-child(5){animation-delay:.24s}.grid>*:nth-child(n+6){animation-delay:.3s}
+.hero>div:first-child>*{animation:up .7s both}.hero .tag{animation-delay:.05s}.hero h1{animation-delay:.12s}.hero p{animation-delay:.2s}.mock{animation:flt 6s ease-in-out infinite}
+.gt{background:linear-gradient(90deg,var(--blue),var(--cyan),var(--blue));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gl 5s linear infinite}
+.btn{position:relative;overflow:hidden}.btn.p{background:linear-gradient(120deg,var(--blue),#4f46e5,var(--cyan));background-size:200% 100%;box-shadow:0 8px 20px rgba(37,99,235,.35)}.btn.p:hover{animation:gl 1.6s linear infinite}.btn:active{transform:scale(.96)}
+.btn.p::after{content:'';position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:.6s}.btn.p:hover::after{left:130%}
+.logo:hover svg{transform:rotate(-8deg) scale(1.08)}.logo svg{transition:.3s}nav.glass{animation:sl .6s both}.chip{transition:.25s}.chip:hover{transform:translateY(-2px)}
+.toast{animation:sl .35s both}.modal.on .mb{animation:pop .3s both}#designer.on{animation:pop .3s both}.item{animation:pop .25s both;transition:.2s}.item:hover{box-shadow:0 8px 22px rgba(11,31,75,.1)}.pv{transition:box-shadow .3s}
+.hg .th{height:150px}.hg .th .pv{transform:scale(.3);transform-origin:top left;width:210mm}
+@media(prefers-reduced-motion:reduce){*,::before,::after{animation:none!important;transition:none!important}}
+</style></head><body>
+<nav class="glass"><a href="#home" class="logo"><svg viewBox="0 0 36 36"><rect width="36" height="36" rx="10" fill="#0b1f4b"/><rect x="8" y="6" width="16" height="22" rx="3" fill="#fff"/><path d="M12 12h8M12 16h8M12 20h5" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/><path d="M20 29l1-5 8-8 4 4-8 8z" fill="#06b6d4"/></svg>AskPaperGen</a>
+<button class="btn" id="burger">☰</button>
+<div class="links"><a class="l" href="#home">Home</a><a class="l" href="#generator">Paper Generator</a><a class="l" href="#templates">Templates</a><a class="l" href="#about">About</a><a class="l" href="#contact">Contact</a><a class="btn p" href="#generator" onclick="newPaper()">Create Paper</a></div></nav>
+
+<section class="page" id="home"><div class="wrap">
+<div class="hero"><div><span class="tag">Create. Format. Print.</span><h1>Create Professional <span class="gt">Exam Papers</span> in Minutes</h1><p>Design, format, preview, and print exam papers without complicated software.</p><a class="btn p" href="#generator">Create a Paper</a> <a class="btn" href="#templates">Explore Templates</a></div><div class="glass mock" id="mock"></div></div>
+<h2 class="t">Everything a paper needs</h2><div class="grid g5" id="feats"></div>
+<h2 class="t">Premium header designs</h2><p style="color:#52638a;margin:-8px 0 14px">Pick a header style — it is applied instantly in the generator and every template.</p><div class="grid g4 hg" id="hgal"></div>
+<h2 class="t">How it works</h2><div class="grid g4" id="how"></div></div></section>
+
+<section class="page" id="generator"><div class="gen" id="gen" data-t="preview">
+<aside class="glass panel lp"><h3>Content Tools</h3><div class="tools" id="tools"></div><h3>Questions <small id="cnt"></small></h3><div id="list"></div></aside>
+<main class="center"><div class="bar glass" style="padding:8px 12px"><span class="stat" id="saved">● Saved locally</span><span><label class="k" style="display:inline-flex;margin:0"><input type="checkbox" id="rtl"> Urdu RTL</label></span><button class="btn s" id="togR">⚙ Settings</button></div><div id="gp"></div></main>
+<aside class="glass panel rp"><h3>Paper Settings</h3><div id="meta"></div><div id="sty"></div>
+<div class="tools" style="margin-top:12px"><button class="btn" onclick="saveDraft()">💾 Save Draft</button><button class="btn" onclick="openPrev(paper)">👁 Preview</button><button class="btn p" onclick="doPrint()">🖨 Print</button><button class="btn c" onclick="doPrint()">PDF Export</button><button class="btn d" onclick="clearPaper()">Clear</button><button class="btn" onclick="loadDraft()">Load Draft</button></div><small style="color:#667;display:block;margin-top:8px">PDF Export: choose “Save as PDF” in the print dialog.</small></aside>
+<div class="tabs glass"><button class="btn on" data-t="preview">Preview</button><button class="btn" data-t="content">Content</button><button class="btn" data-t="settings">Design / Settings</button></div></div></section>
+
+<section class="page" id="templates"><div class="wrap"><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><h2 style="margin-right:auto">Templates</h2><input id="tq" placeholder="Search templates..." style="max-width:260px"><button class="btn p" onclick="openDesigner()">+ Create New Template</button></div><div class="chips" id="chips"></div><div class="grid g4" id="tgrid"></div></div></section>
+
+<section class="page" id="about"><div class="wrap" style="max-width:760px"><h2 class="t">About AskPaperGen</h2><div class="glass" style="padding:22px"><p>AskPaperGen is a manual exam paper formatting tool for teachers, schools, colleges, academies and stationery shops. It is not an AI question generator — you write the questions, we make them look professional.</p><p>Everything runs in your browser. Papers and templates are stored in localStorage on your device; nothing is uploaded.</p></div></div></section>
+<section class="page" id="contact"><div class="wrap" style="max-width:560px"><h2 class="t">Contact</h2><div class="glass" style="padding:22px"><label class="f">Name</label><input id="cn"><label class="f">Message</label><textarea id="cm" style="min-height:110px"></textarea><br><br><button class="btn p" onclick="mail()">Send via email app</button></div></div></section>
+<footer>© AskPaperGen — Create. Format. Print.</footer>
+
+<div id="designer"><div class="glass panel" id="dl"></div><div class="center"><div class="bar glass" style="padding:8px 12px"><b>Template Designer — live A4 preview</b></div><div id="dp"></div></div>
+<div class="glass panel dr"><h3>Template Information</h3><label class="f">Template Name</label><input id="dn"><label class="f">Description</label><textarea id="dd"></textarea><label class="f">Category</label><select id="dc"></select><div class="tools" style="margin-top:14px"><button class="btn p" onclick="saveTpl()">Save Template</button><button class="btn" onclick="resetTpl()">Reset</button><button class="btn" onclick="closeDesigner()">Close</button></div></div></div>
+<div class="modal" id="pm"><div class="mb"><div class="acts" style="margin:0 0 10px"><button class="btn p" id="pu">Use Template</button><button class="btn" onclick="$('#pm').classList.remove('on')">Close</button></div><div id="pb"></div></div></div>
+<div id="toast"></div>
+<script>
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+const LS={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{toast('Storage full — try a smaller image')}}};
+const uid=()=>Math.random().toString(36).slice(2,9),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),clone=o=>JSON.parse(JSON.stringify(o));
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;$('#toast').append(t);setTimeout(()=>t.remove(),2200)}
+const CONTACT_EMAIL='you@example.com';function mail(){location.href=`mailto:${CONTACT_EMAIL}?subject=AskPaperGen%20message&body=${encodeURIComponent($('#cm').value+'\n\n'+$('#cn').value)}`}
+/* ---------- data ---------- */
+const DS={font:'Georgia,serif',size:13,head:15,qsize:13,line:1.5,align:'left',page:'A4',orient:'portrait',margin:15,pr:'#000000',ac:'#000000',tx:'#000000',bd:'#000000',hstyle:'classic',logoShape:'circle',logoSize:64,logoPos:'top',logoBorder:'accent',hdr:'center',hborder:'bottom',hgap:8,order:'inst',qstyle:'numbered',sstyle:'simple',rtl:false,logo:''};
+const DM={inst:'Your School Name',exam:'Annual Examination',subject:'Subject',cls:'Class',marks:'50',time:'2 Hours',date:'',teacher:'',code:''};
+const mcq=(t,a,b,c,d,m=1)=>({id:uid(),type:'mcq',text:t,opts:[a,b,c,d],marks:m}),sh=(t,m=2)=>({id:uid(),type:'short',text:t,marks:m}),lg=(t,m=5,l=4)=>({id:uid(),type:'long',text:t,marks:m,lines:l}),sec=(t,i,m='')=>({id:uid(),type:'section',title:t,instr:i,marks:m}),ins=t=>({id:uid(),type:'instr',text:t});
+const stdItems=()=>[ins('Attempt all questions. Write neatly. Use of calculators is not allowed.'),sec('Section A','Multiple Choice Questions','10'),mcq('Which planet is known as the Red Planet?','Venus','Mars','Jupiter','Saturn'),mcq('The value of 7 × 8 is:','54','56','64','49'),sec('Section B','Short Questions — answer any three','6'),sh('Define photosynthesis.'),sh('Write a note on the water cycle.'),sh('What is a noun? Give two examples.'),sec('Section C','Long Questions','10'),lg('Describe the importance of education in society.',10,5)];
+const urdu=()=>[ins('تمام سوالات حل کریں۔ صاف اور خوشخط لکھیں۔'),sec('حصہ اول','کثیر الانتخابی سوالات','5'),mcq('پاکستان کا قومی پھول کون سا ہے؟','گلاب','چنبیلی','سورج مکھی','گیندا'),mcq('اردو کے کل حروفِ تہجی کتنے ہیں؟','۳۵','۳۸','۴۰','۳۰'),sec('حصہ دوم','مختصر سوالات','6'),sh('اسم کی تعریف کیجیے۔ مثال بھی دیں۔'),sh('"علم بڑی دولت ہے" — اس جملے کی وضاحت کریں۔'),sec('حصہ سوم','تفصیلی سوالات','10'),lg('اپنے پسندیدہ شاعر کے بارے میں مضمون لکھیے۔',10,5)];
+const mcqs=()=>[ins('Circle the correct option. Each question carries 1 mark.'),...[['2 + 2 =','3','4','5','6'],['Capital of France?','Rome','Berlin','Paris','Madrid'],['H₂O is:','Salt','Water','Oil','Acid'],['Largest ocean?','Atlantic','Indian','Arctic','Pacific'],['Square root of 81?','7','8','9','10'],['Fastest land animal?','Lion','Cheetah','Horse','Deer'],['Binary of 5?','101','110','011','111'],['Author of “Hamlet”?','Dickens','Austen','Shakespeare','Twain']].map(a=>mcq(...a))];
+const quiz=()=>[ins('Answer in the space provided.'),sh('What is 12 × 12?',1),sh('Name the three states of matter.',2),sh('Spell “necessary” correctly.',1),sh('Who wrote our national anthem?',1)];
+const S=o=>({...DS,...o});
+const CREST='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0b1f4b"/><path d="M22 34l28-10 28 10v30l-28 10-28-10z" fill="#fff"/><path d="M50 24v50M26 38l24 9 24-9" stroke="#0b1f4b" stroke-width="3" fill="none"/><circle cx="50" cy="82" r="5" fill="#06b6d4"/></svg>');
+const BUILTIN=[
+{id:'classic',name:'Classic School',cat:'School',desc:'Traditional black & white school paper.',style:S({hstyle:'classic',hborder:'bottom'}),meta:{...DM,inst:'SCHOOL NAME',exam:'ANNUAL EXAMINATION'},items:stdItems},
+{id:'modern',name:'Modern Academic',cat:'School',desc:'Clean blue accent, large header, organised sections.',style:S({logo:CREST,logoPos:'left',hstyle:'gradient',font:'Inter,Arial,sans-serif',pr:'#1d4ed8',ac:'#06b6d4',bd:'#bcd0f5',hborder:'box',sstyle:'color',qstyle:'numbered',head:16}),meta:{...DM,inst:'Horizon Academy',exam:'Term Assessment 2026'},items:stdItems},
+{id:'college',name:'College Examination',cat:'College',desc:'Institution, department, semester, course code.',style:S({logo:CREST,logoPos:'top',hstyle:'seal',font:'"Times New Roman",serif',hborder:'double',sstyle:'under',pr:'#0b1f4b',ac:'#0b1f4b',bd:'#0b1f4b'}),meta:{...DM,inst:'City College of Science',exam:'Semester Examination',subject:'Course Title: Physics I',cls:'Department: Physics · Semester: 3',marks:'60',time:'3 Hours',code:'PHY-201'},items:stdItems},
+{id:'mid',name:'Mid Term',cat:'Mid Term',desc:'Simple mid-term exam format.',style:S({hstyle:'ribbon',hborder:'bottom',sstyle:'box',qstyle:'lettered'}),meta:{...DM,inst:'Your School Name',exam:'MID TERM EXAMINATION',marks:'30',time:'1.5 Hours'},items:stdItems},
+{id:'final',name:'Final Examination',cat:'Final',desc:'Formal final-term design with detailed header.',style:S({logo:CREST,logoPos:'right',hstyle:'banner',font:'"Times New Roman",serif',hborder:'box',sstyle:'box',qstyle:'boxed',pr:'#7f1d1d',ac:'#7f1d1d',bd:'#7f1d1d',head:16}),meta:{...DM,inst:'GRAMMAR HIGH SCHOOL',exam:'FINAL TERM EXAMINATION',marks:'100',time:'3 Hours',code:'F-2026'},items:stdItems},
+{id:'mcq',name:'MCQ Test',cat:'MCQ',desc:'Compact layout for many MCQs per page.',style:S({hstyle:'split',font:'Arial,sans-serif',size:12,qsize:12,line:1.25,qstyle:'minimal',sstyle:'simple',hborder:'bottom',margin:12}),meta:{...DM,exam:'MCQ TEST',marks:'8',time:'15 Minutes'},items:mcqs},
+{id:'quiz',name:'Quiz',cat:'Quiz',desc:'Minimal classroom quiz with name, roll and score.',style:S({hstyle:'modern',font:'Arial,sans-serif',hborder:'none',qstyle:'under',ac:'#06b6d4',pr:'#0b1f4b'}),meta:{...DM,exam:'CLASS QUIZ',inst:'Student Name: ____________   Roll No: ______',subject:'Date: ________',cls:'Score: ___ / 5',marks:'5',time:'10 Min',teacher:''},items:quiz},
+{id:'urdu',name:'Urdu Examination',cat:'Urdu',desc:'RTL layout with Urdu typography and sample content.',style:S({hstyle:'ribbon',font:'"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Noto Naskh Arabic","Segoe UI",serif',rtl:true,line:2,size:14,hborder:'bottom',sstyle:'box',qstyle:'numbered',pr:'#064e3b',ac:'#064e3b'}),meta:{...DM,inst:'گورنمنٹ ہائی اسکول',exam:'سالانہ امتحان',subject:'اردو',cls:'جماعت: نہم',marks:'50',time:'۲ گھنٹے'},items:urdu}].map(t=>({...t,builtin:true}));
+/* ---------- render ---------- */
+function render(p){const s=p.style,m=p.meta,pg=s.page==='Letter'?[215.9,279.4]:[210,297],[w,h]=s.orient==='landscape'?[pg[1],pg[0]]:pg;
+let n=0;const lt=i=>String.fromCharCode(65+i%26);
+const num=i=>s.qstyle==='lettered'?lt(i)+'.':'Q'+(i+1)+'.';
+const body=p.items.map(it=>{const sk=s.rtl?'':'';
+if(it.type==='section')return`<div class="sec sec-${s.sstyle}"><span>${esc(it.title)}</span>${it.marks?`<span>(${esc(it.marks)})</span>`:''}</div>${it.instr?`<div class="si">${esc(it.instr)}</div>`:''}`;
+if(it.type==='instr')return`<div class="ins">${esc(it.text)}</div>`;
+if(it.type==='table')return`<table class="tb">${it.rows.map(r=>`<tr>${r.map(c=>`<td style="text-align:${it.align||'left'}">${esc(c)}</td>`).join('')}</tr>`).join('')}</table>`;
+if(it.type==='image')return it.src?`<img class="im" src="${it.src}">`:'';
+const i=n++;let x=`<div class="qb"><div style="font-size:${s.qsize}px"><b>${num(i)}</b> ${esc(it.text)}</div>`;
+if(it.type==='mcq')x+=`<div class="opts">${it.opts.map((o,k)=>`<div>(${lt(k).toLowerCase()}) ${esc(o)}</div>`).join('')}</div>`;
+if(it.type==='long')x+=Array.from({length:+it.lines||0},()=>'<div class="ln"></div>').join('');
+return`<div class="q">${x}</div>${it.marks?`<span class="qm">[${esc(it.marks)}]</span>`:''}</div>`.replace('</div></div>${','</div>${')}).join('');
+const ttl=[`<div class="inst" style="font-size:${s.head+5}px">${esc(m.inst)}</div>`,`<div class="exam" style="font-size:${s.head}px">${esc(m.exam)}</div>`];if(s.order==='exam')ttl.reverse();
+const mt=[['Subject',m.subject],['Class',m.cls],['Time',m.time],['Total Marks',m.marks],['Date',m.date],['Paper Code',m.code],['Teacher',m.teacher]].filter(a=>a[1]).map(a=>`<div><b>${a[0]}:</b> ${esc(a[1])}</div>`).join('');
+const lsz=s.logoSize||64,shp=s.logoShape||'circle',bc={none:'none',accent:`3px solid ${s.ac}`,primary:`3px solid ${s.pr}`,white:'3px solid #fff'}[s.logoBorder||'accent'],li=s.logo?`<img class="logo2" src="${s.logo}" alt="logo" style="width:${lsz}px;height:${lsz}px;object-fit:${shp==='original'?'contain':'cover'};border-radius:${shp==='circle'?'50%':shp==='rounded'?'14%':'0'};border:${shp==='original'?'none':bc};flex:none">`:'',side=li&&(s.logoPos==='left'||s.logoPos==='right'),first=(s.logoPos==='left')!==!!s.rtl;
+return`<div class="pv qs-${s.qstyle==='boxed'?'box':s.qstyle==='under'?'under':s.qstyle==='minimal'?'min':'num'}" dir="${s.rtl?'rtl':'ltr'}" style="--pr:${s.pr};--ac:${s.ac};--tx:${s.tx};--bd:${s.bd};--hs:${s.head}px;width:${w}mm;min-height:${h}mm;padding:${s.margin}mm;font:${s.size}px/${s.line} ${s.font};text-align:${s.align}"><div class="hd ${s.hborder} hs-${s.hstyle}${side?' lgs':''}" style="text-align:${s.hdr};margin-bottom:${s.hgap}px">${side&&first?li:''}${!side&&li?li+'<br>':''}<div class="ht">${ttl.join('')}</div>${side&&!first?li:''}</div><div class="mt">${mt}</div>${body||'<div class="empty">No questions yet</div>'}</div>`}
+/* ---------- controls ---------- */
+const HS=[['classic', 'Classic'], ['banner', 'Solid Banner'], ['gradient', 'Gradient Glass'], ['split', 'Split Bar'], ['ribbon', 'Ribbon'], ['modern', 'Accent Edge'], ['seal', 'Ornament']];
+const SF=[['hstyle','Header design','sel',HS],['logo','School logo','img'],['logoShape','Logo shape','sel',[['circle','Circle'],['rounded','Rounded'],['square','Square'],['original','Original (no crop)']]],['logoSize','Logo size','rng',30,140],['logoPos','Logo position','sel',[['top','Above title'],['left','Left of title'],['right','Right of title']]],['logoBorder','Logo border','sel',[['accent','Accent'],['primary','Primary'],['white','White'],['none','None']]],['font','Font family','sel',[['Georgia,serif','Georgia'],['"Times New Roman",serif','Times New Roman'],['Arial,sans-serif','Arial'],['Inter,Arial,sans-serif','Modern Sans'],['"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif','Urdu Nastaliq'],['"Courier New",monospace','Mono']]],['size','Font size','rng',9,20],['head','Heading size','rng',12,26],['qsize','Question size','rng',9,20],['line','Line spacing','rng',1,2.4,.05],['align','Text alignment','sel',['left','center','right','justify']],['page','Page size','sel',['A4','Letter']],['orient','Orientation','sel',['portrait','landscape']],['margin','Margins (mm)','rng',5,30]];
+const DF=[['order','Title position','sel',[['inst','Institution first'],['exam','Exam title first']]],['hdr','Header alignment','sel',['center','left','right']],['hgap','Header spacing','rng',0,40],['hborder','Border style','sel',['bottom','box','double','none']],['pr','Primary color','col'],['ac','Accent color','col'],['tx','Text color','col'],['bd','Border color','col'],['qstyle','Question style','sel',[['numbered','Numbered'],['lettered','Lettered'],['boxed','Boxed'],['under','Underlined'],['minimal','Minimal']]],['sstyle','Section style','sel',[['simple','Simple heading'],['box','Box heading'],['color','Colored heading'],['under','Underlined heading']]]];
+const MF=[['inst','Institution Name'],['exam','Exam Name'],['subject','Subject'],['cls','Class'],['marks','Total Marks'],['time','Time Allowed'],['date','Date','date'],['teacher','Teacher Name'],['code','Paper Code']];
+function ctl(f,val,grp){const[k,l,t,a,b,st]=f,d=`data-g="${grp}" data-k="${k}"`;let c;
+if(t==='sel')c=`<select ${d}>${a.map(o=>{const[v,n]=Array.isArray(o)?o:[o,o];return`<option value="${esc(v)}" ${v==val?'selected':''}>${n}</option>`}).join('')}</select>`;
+else if(t==='rng')c=`<input type="range" ${d} min="${a}" max="${b}" step="${st||1}" value="${val}">`;
+else if(t==='col')c=`<input type="color" ${d} value="${val}">`;
+else if(t==='img')c=`<input type="file" accept="image/*" ${d}>${val?`<button class="btn s" data-clr="${k}" type="button">Remove logo</button>`:''}`;
+else c=`<input ${d} type="${t||'text'}" value="${esc(val)}">`;return`<label class="f">${l}</label>${c}`}
+function bind(root,get,fn){root.oninput=e=>{const t=e.target,g=t.dataset.g;if(!g||t.type==='file')return;get()[g][t.dataset.k]=t.type==='range'?+t.value:t.value;fn(false)};
+root.onchange=e=>{const t=e.target;if(t.type==='file'&&t.files[0]){const r=new FileReader();r.onload=()=>{get()[t.dataset.g][t.dataset.k]=r.result;fn(true)};r.readAsDataURL(t.files[0])}};
+root.onclick=e=>{const k=e.target.dataset.clr;if(k){get().style[k]='';fn(true)}}}
+/* ---------- generator ---------- */
+let paper=LS.get('apg_paper',null)||fromTpl(BUILTIN[0]);paper.style={...DS,...paper.style};
+function fromTpl(t){const it=typeof t.items==='function'?t.items():clone(t.items);return{meta:{...t.meta},style:{...DS,...t.style},items:it.map(i=>({...i,id:uid()}))}}
+function save(){LS.set('apg_paper',paper);const s=$('#saved');s.textContent='● Saved locally';}
+function refresh(){$('#gp').innerHTML=render(paper);$('#rtl').checked=!!paper.style.rtl;save();fit()}
+function fit(){const c=$('.center');const pv=$('#gp .pv');if(!pv)return;const av=(c.clientWidth-30),pw=pv.offsetWidth,sc=Math.min(1,av/pw);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';$('#gp').style.height=sc<1?pv.offsetHeight*sc+'px':'';$('#gp').style.width=sc<1?pw*sc+'px':''}
+const TYPES=[['mcq','Add MCQ'],['short','Add Short Question'],['long','Add Long Question'],['section','Add Section'],['table','Add Table'],['image','Add Image'],['instr','Add Instructions']];
+function newItem(t){return({mcq:()=>mcq('',"","","",""),short:()=>sh(''),long:()=>lg('',5,4),section:()=>sec('Section','',''),table:()=>({id:uid(),type:'table',rows:[['Heading','Heading'],['','']],align:'left'}),image:()=>({id:uid(),type:'image',src:''}),instr:()=>ins('')})[t]()}
+function listHTML(){let n=0;const f=(k,v,ph,ta)=>ta?`<textarea data-k="${k}" placeholder="${ph}">${esc(v)}</textarea>`:`<input data-k="${k}" value="${esc(v)}" placeholder="${ph}">`;
+if(!paper.items.length)return'<div class="empty">No content yet.<br>Use the tools above to add questions.</div>';
+return paper.items.map(it=>{const q=['mcq','short','long'].includes(it.type);if(q)n++;let b='';const mk=`<label class="f">Marks</label><input type="number" data-k="marks" value="${esc(it.marks)}">`;
+if(it.type==='mcq')b=f('text',it.text,'Question text',1)+it.opts.map((o,i)=>`<input data-o="${i}" value="${esc(o)}" placeholder="Option ${'ABCD'[i]}" style="margin-top:4px">`).join('')+mk;
+if(it.type==='short')b=f('text',it.text,'Question text',1)+mk;
+if(it.type==='long')b=f('text',it.text,'Question text',1)+`<div class="row2"><div>${mk}</div><div><label class="f">Answer lines</label><input type="number" data-k="lines" value="${it.lines||0}"></div></div>`;
+if(it.type==='section')b=f('title',it.title,'Section title')+f('instr',it.instr,'Instructions')+`<label class="f">Marks (optional)</label><input data-k="marks" value="${esc(it.marks)}">`;
+if(it.type==='instr')b=f('text',it.text,'General instructions',1);
+if(it.type==='table')b=`<table class="te">${it.rows.map((r,ri)=>`<tr>${r.map((c,ci)=>`<td><input data-r="${ri}" data-c="${ci}" value="${esc(c)}"></td>`).join('')}</tr>`).join('')}</table><div class="acts"><button class="btn s" data-a="ar">+Row</button><button class="btn s" data-a="dr">−Row</button><button class="btn s" data-a="ac">+Col</button><button class="btn s" data-a="dc">−Col</button><select data-k="align" style="width:auto"><option ${it.align=='left'?'selected':''}>left</option><option ${it.align=='center'?'selected':''}>center</option><option ${it.align=='right'?'selected':''}>right</option></select></div>`;
+if(it.type==='image')b=`<input type="file" accept="image/*" data-img="1">${it.src?'<img src="'+it.src+'" style="max-width:100%;max-height:80px;margin-top:6px">':''}`;
+const lbl={mcq:'MCQ',short:'Short',long:'Long',section:'Section',instr:'Instructions',table:'Table',image:'Image'}[it.type];
+return`<div class="item" draggable="false" data-id="${it.id}"><div class="ih"><span class="h" title="Drag to reorder">⠿</span>${q?'Q'+n+' · ':''}${lbl}<span class="sp"><button class="btn s" data-a="up" title="Move up">↑</button><button class="btn s" data-a="dup" title="Duplicate">⎘</button><button class="btn s d" data-a="del" title="Delete">✕</button></span></div>${b}</div>`}).join('')}
+function drawList(){$('#list').innerHTML=listHTML();$('#cnt').textContent='('+paper.items.length+')'}
+function drawSettings(){$('#meta').innerHTML=MF.map(f=>ctl([f[0],f[1],f[2]||'text'],paper.meta[f[0]],'meta')).join('');$('#sty').innerHTML='<h3>Layout</h3>'+SF.map(f=>ctl(f,paper.style[f[0]],'style')).join('')}
+function initGen(){$('#tools').innerHTML=TYPES.map(t=>`<button class="btn" data-add="${t[0]}">＋ ${t[1].replace('Add ','')}</button>`).join('');
+$('#tools').onclick=e=>{const t=e.target.dataset.add;if(t){paper.items.push(newItem(t));drawList();refresh();$('#list').lastElementChild?.scrollIntoView({behavior:'smooth'})}};
+const L=$('#list'),find=e=>{const c=e.target.closest('[data-id]');return c&&paper.items.find(i=>i.id===c.dataset.id)};
+L.oninput=e=>{const it=find(e),t=e.target;if(!it)return;if(t.dataset.o!=null)it.opts[t.dataset.o]=t.value;else if(t.dataset.r!=null)it.rows[t.dataset.r][t.dataset.c]=t.value;else if(t.dataset.k)it[t.dataset.k]=t.value;refresh()};
+L.onchange=e=>{const t=e.target,it=find(e);if(t.dataset.img&&t.files[0]){const r=new FileReader();r.onload=()=>{it.src=r.result;drawList();refresh()};r.readAsDataURL(t.files[0])}};
+L.onclick=e=>{const a=e.target.dataset.a,it=find(e);if(!a||!it)return;const i=paper.items.indexOf(it);
+if(a==='del')paper.items.splice(i,1);if(a==='dup')paper.items.splice(i+1,0,{...clone(it),id:uid()});if(a==='up'&&i>0)[paper.items[i-1],paper.items[i]]=[paper.items[i],paper.items[i-1]];
+if(a==='ar')it.rows.push(it.rows[0].map(()=>''));if(a==='dr'&&it.rows.length>1)it.rows.pop();if(a==='ac')it.rows.forEach(r=>r.push(''));if(a==='dc'&&it.rows[0].length>1)it.rows.forEach(r=>r.pop());drawList();refresh()};
+let drag=null;L.addEventListener('mousedown',e=>{const c=e.target.closest('.item');if(c)c.draggable=!!e.target.closest('.h')});
+L.addEventListener('dragstart',e=>{drag=e.target.closest('.item')?.dataset.id;e.dataTransfer.effectAllowed='move'});
+L.addEventListener('dragover',e=>{e.preventDefault();$$('.over',L).forEach(x=>x.classList.remove('over'));e.target.closest('.item')?.classList.add('over')});
+L.addEventListener('drop',e=>{e.preventDefault();const to=e.target.closest('.item')?.dataset.id;if(!drag||!to||drag===to)return;const a=paper.items.findIndex(i=>i.id===drag),[x]=paper.items.splice(a,1);paper.items.splice(paper.items.findIndex(i=>i.id===to),0,x);drawList();refresh()});
+L.addEventListener('dragend',()=>$$('.item').forEach(x=>{x.classList.remove('over');x.draggable=false}));
+const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').onchange=e=>{paper.style.rtl=e.target.checked;if(paper.style.rtl&&!/Nastaliq|Naskh/.test(paper.style.font))paper.style.font=SF[0][3][4][0];drawSettings();refresh()};
+$('#togR').onclick=()=>P.classList.toggle('open');
+$$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b))});
+addEventListener('resize',fit);drawList();drawSettings();refresh()}
+function loadPaper(p){paper=p;drawList();drawSettings();refresh()}
+function newPaper(){loadPaper({meta:{...DM},style:{...DS},items:[]})}
+function clearPaper(){if(confirm('Clear the whole paper?'))newPaper()}
+function saveDraft(){const d=LS.get('apg_drafts',[]);d.unshift({t:new Date().toLocaleString(),p:clone(paper)});LS.set('apg_drafts',d.slice(0,10));toast('Draft saved locally')}
+function loadDraft(){const d=LS.get('apg_drafts',[]);if(!d.length)return toast('No drafts yet');loadPaper(clone(d[0].p));toast('Loaded draft from '+d[0].t)}
+function useTemplate(t){loadPaper(fromTpl(t));$('#pm').classList.remove('on');location.hash='generator';toast('Template “'+t.name+'” loaded')}
+/* ---------- print ---------- */
+function doPrint(p=paper){const s=p.style,st=document.createElement('style');st.textContent=`@page{size:${s.page==='Letter'?'letter':'A4'} ${s.orient};margin:0}@media print{body.printing>*:not(#ph){display:none!important}#ph{display:block!important}#ph .pv{box-shadow:none!important;transform:none!important;margin:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}body{background:#fff!important}}`;
+const h=document.createElement('div');h.id='ph';h.style.display='none';h.innerHTML=render(p);document.body.append(st,h);document.body.classList.add('printing');
+const done=()=>{document.body.classList.remove('printing');st.remove();h.remove();removeEventListener('afterprint',done)};addEventListener('afterprint',done);setTimeout(()=>print(),100)}
+/* ---------- templates ---------- */
+let filt='All',q='',pt=null;const CATS=['School','College','University','Quiz','MCQ','Mid Term','Final','Urdu'];
+const myT=()=>LS.get('apg_tpl',[]),allT=()=>[...BUILTIN,...myT().map(t=>({...t,mine:true}))];
+function drawTpl(){$('#chips').innerHTML=['All',...CATS,'My Templates'].map(c=>`<span class="chip ${c===filt?'on':''}" data-c="${c}">${c}</span>`).join('');
+const list=allT().filter(t=>(filt==='All'||(filt==='My Templates'?t.mine:t.cat===filt))&&(t.name+t.desc+t.cat).toLowerCase().includes(q.toLowerCase()));
+$('#tgrid').innerHTML=list.map(t=>`<div class="glass tc" data-id="${t.id}"><div class="th">${render(fromTpl(t))}</div><b>${esc(t.name)}</b><br><small>${t.cat} · ${t.mine?'Modified '+new Date(t.mod).toLocaleDateString():'Built-in'}</small><div class="acts"><button class="btn s p" data-a="use">Use Template</button><button class="btn s" data-a="pv">Preview</button>${t.mine?'<button class="btn s" data-a="ed">Edit</button>':''}<button class="btn s" data-a="dup">Duplicate</button>${t.mine?'<button class="btn s d" data-a="del">Delete</button>':''}</div></div>`).join('')||(filt==='My Templates'?'<div class="empty" style="grid-column:1/-1">You have no custom templates yet.<br><br><button class="btn p" onclick="openDesigner()">+ Create New Template</button></div>':'<div class="empty" style="grid-column:1/-1">No templates match.</div>')}
+function openPrev(p,t){pt=t;$('#pb').innerHTML=render(p.meta?p:fromTpl(p));$('#pu').style.display=t?'':'none';$('#pm').classList.add('on')}
+$('#pu').onclick=()=>pt&&useTemplate(pt);$('#pm').onclick=e=>{if(e.target.id==='pm')e.target.classList.remove('on')};
+function initTpl(){$('#chips').onclick=e=>{if(e.target.dataset.c){filt=e.target.dataset.c;drawTpl()}};$('#tq').oninput=e=>{q=e.target.value;drawTpl()};
+$('#tgrid').onclick=e=>{const a=e.target.dataset.a,c=e.target.closest('.tc');if(!a)return;const t=allT().find(x=>x.id===c.dataset.id);
+if(a==='use')useTemplate(t);if(a==='pv')openPrev(fromTpl(t),t);if(a==='ed')openDesigner(t);
+if(a==='dup'){const l=myT();l.push({...clone({...t,items:typeof t.items==='function'?t.items():t.items}),id:uid(),name:t.name+' (Copy)',builtin:false,mine:undefined,mod:Date.now()});LS.set('apg_tpl',l);drawTpl();toast('Duplicated to My Templates')}
+if(a==='del'&&confirm('Delete template “'+t.name+'”? This cannot be undone.')){LS.set('apg_tpl',myT().filter(x=>x.id!==t.id));drawTpl();toast('Template deleted')}};drawTpl()}
+/* ---------- designer ---------- */
+let dt=null,d0=null;
+function openDesigner(t){const base=t||BUILTIN[1];dt={id:t?t.id:uid(),name:t?t.name:'My New Template',desc:t?t.desc:'',cat:t?t.cat:'School',style:{...DS,...base.style},meta:{...base.meta},items:typeof base.items==='function'?base.items():clone(base.items)};d0=clone(dt);
+$('#dc').innerHTML=CATS.map(c=>`<option ${c===dt.cat?'selected':''}>${c}</option>`).join('');$('#dn').value=dt.name;$('#dd').value=dt.desc;drawDesigner();$('#designer').classList.add('on')}
+function drawDesigner(){$('#dl').innerHTML='<h3>Typography & Paper</h3>'+SF.map(f=>ctl(f,dt.style[f[0]],'style')).join('')+'<h3>Header, Colors & Styles</h3>'+DF.map(f=>ctl(f,dt.style[f[0]],'style')).join('')+`<label class="k"><input type="checkbox" id="drtl" ${dt.style.rtl?'checked':''}> RTL layout</label>`;
+$('#dp').innerHTML=render(dt);$('#drtl').onchange=e=>{dt.style.rtl=e.target.checked;prevD()}}
+function prevD(){$('#dp').innerHTML=render(dt)}
+function closeDesigner(){$('#designer').classList.remove('on')}
+function resetTpl(){dt=clone(d0);$('#dn').value=dt.name;$('#dd').value=dt.desc;drawDesigner();toast('Template reset')}
+function saveTpl(){dt.name=$('#dn').value.trim()||'Untitled';dt.desc=$('#dd').value;dt.cat=$('#dc').value;dt.mod=Date.now();const l=myT(),i=l.findIndex(x=>x.id===dt.id);i>=0?l[i]=clone(dt):l.push(clone(dt));LS.set('apg_tpl',l);closeDesigner();filt='My Templates';drawTpl();toast('Template saved to My Templates')}
+bind($('#dl'),()=>dt,r=>r?drawDesigner():prevD());
+/* ---------- site ---------- */
+const FE=['MCQs','Short Questions','Long Questions','Tables','Images','Urdu RTL Support','Custom Headers','Professional Formatting','Print Ready','PDF Export'],FD=['Unlimited options','Quick marks','With answer lines','Editable grids','From your device','Right-to-left layout','Logo & borders','Clean typography','A4 print CSS','Via browser dialog'];
+$('#feats').innerHTML=FE.map((f,i)=>`<div class="glass feat"><div class="ico">${i+1}</div><b>${f}</b><span>${FD[i]}</span></div>`).join('');
+$('#how').innerHTML=['Choose a template or start from scratch','Add and format questions','Preview your paper','Print or save as PDF'].map((h,i)=>`<div class="glass feat"><div class="ico">${i+1}</div><b>${h}</b></div>`).join('');
+function pickHeader(v){paper.style.hstyle=v;if(v==='banner'||v==='gradient'){paper.style.pr='#0b3a8f';paper.style.ac='#06b6d4'}drawSettings();refresh();location.hash='generator';toast('Header design: '+HS.find(h=>h[0]===v)[1])}
+$('#hgal').innerHTML=HS.map(([v,n])=>`<div class="glass tc" style="cursor:pointer" onclick="pickHeader('${v}')"><div class="th">${render({meta:{...DM,inst:'Horizon Academy',exam:'Annual Examination'},style:{...DS,hstyle:v,pr:'#1d4ed8',ac:'#06b6d4',bd:'#1d4ed8',font:'Inter,Arial,sans-serif'},items:[]})}</div><b>${n}</b></div>`).join('');
+$('#mock').innerHTML=render(fromTpl(BUILTIN[1]));
+function route(){const p=(location.hash||'#home').slice(1);$$('.page').forEach(s=>s.classList.toggle('on',s.id===p));$$('nav a.l').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+p));$('nav .links')?.classList.remove('open');scrollTo(0,0);if(p==='generator')setTimeout(fit,50);if(p==='templates')drawTpl()}
+addEventListener('hashchange',route);$('#burger').onclick=()=>$('nav .links').classList.toggle('open');
+initGen();initTpl();route();
+</script></body></html>
