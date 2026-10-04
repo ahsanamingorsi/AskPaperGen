@@ -6,8 +6,8 @@
  "start_url": "./index.html?source=pwa",
  "scope": "./",
  "display": "standalone",
- "background_color": "#eef3fb",
- "theme_color": "#0b1f4b",
+ "background_color": "#070a12",
+ "theme_color": "#070a12",
  "categories": [
   "education",
   "productivity"

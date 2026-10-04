@@ -33,7 +33,7 @@ L.addEventListener('dragover',e=>{e.preventDefault();$$('.over',L).forEach(x=>x.
 L.addEventListener('drop',e=>{e.preventDefault();const to=e.target.closest('.item')?.dataset.id;if(!drag||!to||drag===to)return;const a=paper.items.findIndex(i=>i.id===drag),[x]=paper.items.splice(a,1);paper.items.splice(paper.items.findIndex(i=>i.id===to),0,x);drawList();refresh()});
 L.addEventListener('dragend',()=>$$('.item').forEach(x=>{x.classList.remove('over');x.draggable=false}));
 const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').onchange=e=>{paper.style.rtl=e.target.checked;if(paper.style.rtl&&!/Nastaliq|Naskh/.test(paper.style.font))paper.style.font=SF[0][3][4][0];drawSettings();refresh()};
-$('#togR').onclick=()=>P.classList.toggle('open');
+$('#togR').onclick=()=>{if(innerWidth<=760)$('.tabs button[data-t=settings]').click();else if(innerWidth<=1100)P.classList.toggle('open');else $('#gen').classList.toggle('hide-r');setTimeout(fit,80)};
 $$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b))});
 addEventListener('resize',fit);drawList();drawSettings();refresh()}
 function loadPaper(p){paper=p;drawList();drawSettings();refresh()}
@@ -45,3 +45,6 @@ function loadDraft(){const d=LS.get('apg_drafts',[]);if(!d.length)return toast('
 initGen();
 {const q=new URLSearchParams(location.search),m=sessionStorage.getItem('apg_msg');
 if(q.has('new'))newPaper();if(m){sessionStorage.removeItem('apg_msg');toast(m)}if(q.has('scan'))openScan();if(q.size)history.replaceState(null,'','generator.html')}
+
+function exportJson(){const b=new Blob([JSON.stringify({app:'askpapergen',v:1,paper},null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(paper.meta.subject||'paper').replace(/\W+/g,'-')+'.askpapergen.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Paper exported')}
+$('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t),p=j.paper||j;if(!p.items||!p.meta)throw 0;p.style={...DS,...p.style};p.items.forEach(i=>i.id=uid());loadPaper(p);toast('Paper imported')}catch{toast('That file is not a valid AskPaperGen paper')}});e.target.value=''};
