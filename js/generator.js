@@ -2,7 +2,7 @@
 let paper=LS.get('apg_paper',null)||fromTpl(BUILTIN[0]);paper.style={...DS,...paper.style};
 function save(){LS.set('apg_paper',paper);const s=$('#saved');s.textContent='● Saved locally';}
 function refresh(){$('#gp').innerHTML=render(paper);$('#rtl').checked=!!paper.style.rtl;save();fit()}
-function fit(){const c=$('.center');const pv=$('#gp .pv');if(!pv)return;const av=(c.clientWidth-30),pw=pv.offsetWidth,sc=Math.min(1,av/pw);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';$('#gp').style.height=sc<1?pv.offsetHeight*sc+'px':'';$('#gp').style.width=sc<1?pw*sc+'px':''}
+function fit(){const c=$('.center');const pv=$('#gp .pv');if(!pv)return;const av=(c.clientWidth-68),pw=pv.offsetWidth,sc=Math.min(1,av/pw);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';$('#gp').style.height=sc<1?pv.offsetHeight*sc+'px':'';$('#gp').style.width=sc<1?pw*sc+'px':''}
 const TYPES=[['mcq','Add MCQ'],['short','Add Short Question'],['long','Add Long Question'],['section','Add Section'],['table','Add Table'],['image','Add Image'],['instr','Add Instructions']];
 function newItem(t){return({mcq:()=>mcq('',"","","",""),short:()=>sh(''),long:()=>lg('',5,4),section:()=>sec('Section','',''),table:()=>({id:uid(),type:'table',rows:[['Heading','Heading'],['','']],align:'left'}),image:()=>({id:uid(),type:'image',src:''}),instr:()=>ins('')})[t]()}
 function listHTML(){let n=0;const f=(k,v,ph,ta)=>ta?`<textarea dir="auto" data-k="${k}" placeholder="${ph}">${esc(v)}</textarea>`:`<input dir="auto" data-k="${k}" value="${esc(v)}" placeholder="${ph}">`;

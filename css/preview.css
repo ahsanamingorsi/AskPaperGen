@@ -16,3 +16,10 @@
 .pv .hs-ribbon{border:none!important}.pv .hs-ribbon .exam{display:inline-block;background:var(--ac);color:#fff;padding:3px 26px;margin-top:6px;clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%)}
 .pv .hs-modern{border:none!important;border-inline-start:6px solid var(--ac)!important;padding-inline-start:12px!important;text-align:start!important}
 .pv .hs-seal{border:none!important;border-top:4px solid var(--pr)!important;border-bottom:1px solid var(--pr)!important;position:relative;padding-top:14px!important}.pv .hs-seal::before{content:'✦ ✦ ✦';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#fff;padding:0 8px;color:var(--ac);font-size:11px;letter-spacing:4px}
+
+/* rounded paper + frosted-glass backing (generator and template designer) */
+.pv{border-radius:12px}
+#gp,#dp{position:relative;isolation:isolate;margin:16px 14px}
+#gp::before,#dp::before{content:'';position:absolute;inset:-16px;z-index:-1;border-radius:26px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 24px 60px rgba(0,0,0,.45)}
+#gp::after,#dp::after{content:'';position:absolute;inset:-4px;z-index:-2;border-radius:16px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.22);transform:rotate(-1.8deg) translate(-8px,10px)}
+@media(max-width:560px){#gp,#dp{margin:12px 10px}#gp::before,#dp::before{inset:-10px;border-radius:20px}}

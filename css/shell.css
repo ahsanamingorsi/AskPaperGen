@@ -4,7 +4,11 @@ nav.glass{border-radius:18px;padding:9px 18px}footer{padding:36px 20px 90px}foot
 #ibar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,160%);width:min(560px,94vw);z-index:150;padding:12px 14px;display:flex;gap:12px;align-items:center;transition:.55s cubic-bezier(.2,.8,.2,1)}#ibar.on{transform:translate(-50%,0)}#ibar img{width:46px;height:46px;border-radius:12px}#ibar div{flex:1;font-size:12.5px;color:#40527a}#ibar b{display:block;font-size:14px;color:var(--navy)}body[data-page=generator] #ibar{bottom:84px}
 
 footer{margin:60px 12px 12px;padding:0;color:#8b97b5;text-align:left;border-radius:24px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.015))}
-.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;padding:34px 34px 20px;max-width:1180px;margin:0 auto}.fb p{margin:12px 0 0;max-width:300px;font-size:13.5px;line-height:1.6}.fgrid h4{margin:0 0 12px;font:600 12px ui-monospace,Menlo,monospace;color:#22d3ee}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px;padding:34px 34px 20px;max-width:1180px;margin:0 auto}.fb p{margin:12px 0 0;max-width:300px;font-size:13.5px;line-height:1.6}.fgrid .fh{margin:0 0 12px;font:600 12px ui-monospace,Menlo,monospace;color:#22d3ee}
 .fgrid a,.flink{display:block;color:#aab6d3;font-size:14px;font-family:inherit;margin:8px 0;background:none;border:0;padding:0;cursor:pointer;text-align:left}.fgrid a:hover,.flink:hover{color:#fff}.fgrid .logo{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;color:#fff;margin:0}
 .fbot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:16px 34px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;max-width:1180px;margin:0 auto}.fbot a{color:#22d3ee}body[data-page=generator] footer{display:none}
 @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr}.fb{grid-column:1/-1}footer{margin-bottom:84px}.fbot{flex-direction:column}}
+
+.wm{font-weight:800;letter-spacing:-.4px;color:#fff}.wm em{font-style:normal;color:#3b9bff}.logo img{box-shadow:none;border-radius:10px}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}h1.t{font-size:30px;margin:46px 0 16px}h1.ttl{font-size:28px;margin:0}

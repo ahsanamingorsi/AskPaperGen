@@ -33,3 +33,8 @@ let pt=null;
 function openPrev(p,t){pt=t;$('#pb').innerHTML=render(p.meta?p:fromTpl(p));$('#pu').style.display=t?'':'none';$('#pm').classList.add('on')}
 if($('#pm')){$('#pu').onclick=()=>pt&&useTemplate(pt);$('#pm').onclick=e=>{if(e.target.id==='pm')e.target.classList.remove('on')};
 }
+
+/* Scale an A4 .pv to fit its container (used by the template designer and preview modal). */
+function fitBox(el,av){const pv=el&&el.querySelector('.pv');if(!pv)return;pv.style.transform='';el.style.width=el.style.height='';av=av||el.parentElement.clientWidth-68;const sc=Math.min(1,av/pv.offsetWidth);if(sc<1){pv.style.transform=`scale(${sc})`;pv.style.transformOrigin='top left';el.style.width=pv.offsetWidth*sc+'px';el.style.height=pv.offsetHeight*sc+'px'}}
+{const _op=openPrev;openPrev=function(...a){_op(...a);fitBox($('#pb'),Math.min(innerWidth*.94,900)-34)}}
+addEventListener('resize',()=>$('#pm')?.classList.contains('on')&&fitBox($('#pb'),Math.min(innerWidth*.94,900)-34));

@@ -6,3 +6,10 @@ nav{flex-wrap:wrap}#burger{display:block}nav .links{display:none;width:100%;flex
 .tabs{display:flex;position:fixed;bottom:8px;left:8px;right:8px;z-index:70;padding:6px;gap:4px}.tabs button{flex:1}.tabs .on{background:var(--blue);color:#fff}
 #designer{display:none;grid-template-columns:1fr;overflow:auto}#designer.on{display:block}#designer>*{margin-bottom:10px;overflow:visible}}
 
+
+@media(max-width:900px){.hero3{padding:26px 0 14px;gap:26px}.hero3 h1{font-size:34px;letter-spacing:-.8px}.scan2,.prev{padding:22px 18px;gap:22px}.prev{margin-top:36px}.wrap{padding:14px}}
+@media(max-width:560px){nav.glass{margin:8px;padding:8px 12px}.hero3 h1{font-size:30px}.hero3 p,.scan2 p{font-size:15px}.hero3 .acts .btn{flex:1 1 auto;justify-content:center}h2.t{font-size:23px}.scan2 h2,.prev h2,.cta h2{font-size:24px}.eyebrow{margin-top:34px}.cta{padding:26px 16px}.g5,#how.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g4.hg{grid-template-columns:minmax(0,1fr)}.feat{padding:14px}.feat b{font-size:14px}.feat span{font-size:12px}.step{padding:14px}.step .num{font-size:28px}.step p{font-size:12.5px}.tc .th{height:200px}.faq{padding:12px 14px}#ibar{flex-wrap:wrap}#ibar div{flex:1 1 150px}.mb{padding:10px}.dev{padding:18px}.tl,.ab,.soc{padding:16px}.gtop .btn{flex:1 1 auto;justify-content:center}.panel{padding:12px}}
+@media(max-width:380px){.g5,#how.g4{grid-template-columns:1fr}}
+.grid>*{min-width:0}.tc .th{width:100%}
+
+@media(max-width:560px){h1.t{font-size:24px}h1.ttl{font-size:23px}}
