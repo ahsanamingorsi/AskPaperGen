@@ -1,0 +1,4 @@
+/* templates */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.chip{padding:6px 12px;border-radius:99px;border:1px solid var(--bd);background:#fff;font-weight:600;font-size:13px;cursor:pointer}.chip.on{background:var(--blue);color:#fff}
+.tc{padding:12px}.tc .th{height:230px;overflow:hidden;border-radius:10px;background:#dfe7f5;margin-bottom:10px;position:relative}.tc .th .pv{transform:scale(.3);transform-origin:top left;width:210mm;box-shadow:none}
+#designer{position:fixed;inset:0;z-index:90;background:var(--bg);display:none;grid-template-columns:300px 1fr 280px;gap:12px;padding:12px}#designer.on{display:grid}#designer>*{overflow:auto;min-height:0}
