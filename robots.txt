@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://askpapergen.ahsanamingorsi.com/sitemap.xml
+Sitemap: https://ahsanamingorsi.github.io/AskPaperGen/sitemap.xml

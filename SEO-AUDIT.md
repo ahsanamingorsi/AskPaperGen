@@ -28,4 +28,4 @@ Method: the on-site workflow from the BeyondSEO skill (https://github.com/beyond
 ## Not done / not measurable here
 - Live indexing, rankings, search impressions and AI-answer citations — these need real search-console and monitoring data. Nothing here guarantees ranking.
 - Off-site work (backlinks, publishing plan, competitor and reputation research) — the skill covers this, but it needs live web research and your authorisation to publish.
-- Replace `https://askpapergen.ahsanamingorsi.com/` in canonical, sitemap and schema if the final domain differs.
+- Canonical, sitemap and schema use `https://ahsanamingorsi.github.io/AskPaperGen/`. If you move to a custom domain, replace that address in all five HTML files, `sitemap.xml` and `robots.txt`. Note: crawlers only read `robots.txt` at a domain root, so on github.io project pages it has no effect; submit `sitemap.xml` in Google Search Console instead.
