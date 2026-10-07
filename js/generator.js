@@ -32,7 +32,7 @@ L.addEventListener('dragstart',e=>{drag=e.target.closest('.item')?.dataset.id;e.
 L.addEventListener('dragover',e=>{e.preventDefault();$$('.over',L).forEach(x=>x.classList.remove('over'));e.target.closest('.item')?.classList.add('over')});
 L.addEventListener('drop',e=>{e.preventDefault();const to=e.target.closest('.item')?.dataset.id;if(!drag||!to||drag===to)return;const a=paper.items.findIndex(i=>i.id===drag),[x]=paper.items.splice(a,1);paper.items.splice(paper.items.findIndex(i=>i.id===to),0,x);drawList();refresh()});
 L.addEventListener('dragend',()=>$$('.item').forEach(x=>{x.classList.remove('over');x.draggable=false}));
-const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').onchange=e=>{paper.style.rtl=e.target.checked;if(paper.style.rtl&&!/Nastaliq|Naskh/.test(paper.style.font))paper.style.font=SF[0][3][4][0];drawSettings();refresh()};
+const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').onchange=e=>{paper.style.rtl=e.target.checked;if(paper.style.rtl&&!/Nastaliq|Naskh/.test(paper.style.font))paper.style.font=SF.find(f=>f[0]==='font')[3].find(o=>o[1]==='Urdu Nastaliq')[0];drawSettings();refresh()};
 $('#togR').onclick=()=>{if(innerWidth<=760)$('.tabs button[data-t=settings]').click();else if(innerWidth<=1100)P.classList.toggle('open');else $('#gen').classList.toggle('hide-r');setTimeout(fit,80)};
 $$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b))});
 addEventListener('resize',fit);drawList();drawSettings();refresh()}
