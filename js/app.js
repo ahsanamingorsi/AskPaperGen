@@ -8,6 +8,7 @@ $('#foot').innerHTML=`<div class="fgrid"><div class="fb"><a class="logo" href="$
 $('#burger').setAttribute('aria-expanded','false');$('#burger').onclick=()=>{const open=$('nav .links').classList.toggle('open');$('#burger').setAttribute('aria-expanded',String(open))};
 function sizeNav(){document.documentElement.style.setProperty('--nav-height',PWA_MODE?'0px':Math.ceil($('nav').getBoundingClientRect().bottom)+'px')}sizeNav();if('ResizeObserver' in window)new ResizeObserver(sizeNav).observe($('nav'));addEventListener('resize',sizeNav);
 if(PWA_MODE){
+ const editorTabs=$('#gen .tabs');if(editorTabs)$('#gen').prepend(editorTabs);
  $('nav').classList.add('pwa-sidebar');$('nav').setAttribute('aria-label','App navigation');
  const icons={dashboard:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',templates:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M10 9v12"/>',plus:'<path d="M12 5v14M5 12h14"/>',scan:'<path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5M7 9h10M7 13h10M7 17h6"/>',account:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>'};
  const icon=key=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[key]+'</svg>';
