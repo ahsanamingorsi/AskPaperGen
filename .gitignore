@@ -1,0 +1,5 @@
+server/api/node_modules/
+server/api/.wrangler/
+server/api/.dev.vars
+server/api/wrangler.toml
+.tmp/

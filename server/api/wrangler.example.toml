@@ -1,0 +1,35 @@
+name = "askpapergen-accounts"
+main = "worker.mjs"
+compatibility_date = "2026-10-07"
+compatibility_flags = ["nodejs_compat"]
+
+[[rules]]
+type = "Text"
+globs = ["**/*.css"]
+fallthrough = true
+
+[vars]
+ALLOWED_ORIGINS = "https://ahsanamingorsi.github.io,http://localhost:8080,http://127.0.0.1:8080"
+GOOGLE_CLIENT_ID = "REPLACE_WITH_GOOGLE_WEB_CLIENT_ID"
+# Google subject identifiers, separated by commas; never grant admin by a browser flag.
+ADMIN_GOOGLE_SUBS = "REPLACE_WITH_YOUR_GOOGLE_SUB"
+JAZZCASH_ACCOUNT_NAME = ""
+JAZZCASH_ACCOUNT_NUMBER = ""
+EASYPAISA_ACCOUNT_NAME = ""
+EASYPAISA_ACCOUNT_NUMBER = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "askpapergen-accounts"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "EXPORTS"
+bucket_name = "askpapergen-exports"
+
+[browser]
+binding = "BROWSER"
+
+[triggers]
+crons = ["*/5 * * * *"]

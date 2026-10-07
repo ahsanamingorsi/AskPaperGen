@@ -1,5 +1,5 @@
 /* ---------- generator ---------- */
-let paper=LS.get('apg_paper',null)||fromTpl(BUILTIN[0]);paper.style={...DS,...paper.style};
+let paper;try{paper=APGValidatePaper(LS.get('apg_paper',null)||fromTpl(BUILTIN[0]))}catch{paper=fromTpl(BUILTIN[0])}
 function save(){LS.set('apg_paper',paper);const s=$('#saved');s.textContent='● Saved locally';}
 function refresh(){$('#gp').innerHTML=render(paper);$('#rtl').checked=!!paper.style.rtl;save();fit()}
 function fit(){const c=$('#gen .center'),pv=$('#gp .pv');if(!pv||!c.clientWidth||!pv.offsetWidth)return;const cs=getComputedStyle(c),gp=$('#gp'),gs=getComputedStyle(gp),av=Math.max(1,c.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-parseFloat(gs.marginLeft)-parseFloat(gs.marginRight)),sc=Math.min(1,av/pv.offsetWidth);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';gp.style.height=pv.offsetHeight*sc+'px';gp.style.width=pv.offsetWidth*sc+'px'}
@@ -36,7 +36,7 @@ const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').
 $('#togR').onclick=()=>{if(innerWidth<=900)$('.tabs button[data-t=settings]').click();else if(innerWidth<=1200)P.classList.toggle('open');else $('#gen').classList.toggle('hide-r');setTimeout(fit,80)};
 $$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));requestAnimationFrame(fit)});
 addEventListener('resize',fit);if('ResizeObserver' in window)new ResizeObserver(()=>requestAnimationFrame(fit)).observe($('#gen .center'));document.fonts?.ready.then(fit);const close=document.createElement('button');close.className='btn drawer-close';close.textContent='Close Settings';close.onclick=()=>P.classList.remove('open');P.prepend(close);drawList();drawSettings();refresh()}
-function loadPaper(p){paper=p;drawList();drawSettings();refresh()}
+function loadPaper(p){paper=APGValidatePaper(p);drawList();drawSettings();refresh()}
 function newPaper(){loadPaper({meta:{...DM},style:{...DS},items:[]})}
 function clearPaper(){if(confirm('Clear the whole paper?'))newPaper()}
 function saveDraft(){const d=LS.get('apg_drafts',[]);d.unshift({t:new Date().toLocaleString(),p:clone(paper)});LS.set('apg_drafts',d.slice(0,10));toast('Draft saved locally')}
@@ -46,5 +46,6 @@ initGen();
 {const q=new URLSearchParams(location.search),m=sessionStorage.getItem('apg_msg');
 if(q.has('new'))newPaper();if(m){sessionStorage.removeItem('apg_msg');toast(m)}if(q.has('scan'))openScan();if(q.size)history.replaceState(null,'','generator.html')}
 
-function exportJson(){const b=new Blob([JSON.stringify({app:'askpapergen',v:1,paper},null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=(paper.meta.subject||'paper').replace(/\W+/g,'-')+'.askpapergen.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Paper exported')}
-$('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t),p=j.paper||j;if(!p.items||!p.meta)throw 0;p.style={...DS,...p.style};p.items.forEach(i=>i.id=uid());loadPaper(p);toast('Paper imported')}catch{toast('That file is not a valid AskPaperGen paper')}});e.target.value=''};
+function exportJson(){return window.APGAccount.exportPaper(paper,'json')}
+
+$('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t),p=APGValidatePaper(j.paper||j);if(!p.items||!p.meta)throw 0;p.style={...DS,...p.style};p.items.forEach(i=>i.id=uid());loadPaper(p);toast('Paper imported')}catch{toast('That file is not a valid AskPaperGen paper')}});e.target.value=''};
