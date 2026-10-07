@@ -1,8 +1,0 @@
-{
-  "name": "askpapergen-accounts",
-  "private": true,
-  "type": "module",
-  "scripts": { "dev": "wrangler dev", "deploy": "wrangler deploy", "test": "node --test test/*.test.mjs" },
-  "dependencies": { "jose": "^6.1.0", "@cloudflare/playwright": "^1.0.0" },
-  "devDependencies": { "wrangler": "^4.0.0" }
-}

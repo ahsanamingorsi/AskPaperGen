@@ -1,1 +1,2 @@
 @media print{nav,#nav,#foot,footer,#ibar,#toast,.tabs,.panel,.bar{display:none!important}body{background:#fff!important}body::before,body::after{display:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{body.pwa-app{margin:0!important;padding:0!important}}

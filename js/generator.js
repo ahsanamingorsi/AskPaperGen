@@ -46,6 +46,6 @@ initGen();
 {const q=new URLSearchParams(location.search),m=sessionStorage.getItem('apg_msg');
 if(q.has('new'))newPaper();if(m){sessionStorage.removeItem('apg_msg');toast(m)}if(q.has('scan'))openScan();if(q.size)history.replaceState(null,'','generator.html')}
 
-function exportJson(){return window.APGAccount.exportPaper(paper,'json')}
+function exportJson(){const blob=new Blob([JSON.stringify({app:'askpapergen',v:1,paper},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(paper.meta.subject||'paper').replace(/[^a-zA-Z0-9\u0600-\u06ff-]/g,'-')+'.askpapergen.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Paper exported')}
 
 $('#imp').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{const j=JSON.parse(t),p=APGValidatePaper(j.paper||j);if(!p.items||!p.meta)throw 0;p.style={...DS,...p.style};p.items.forEach(i=>i.id=uid());loadPaper(p);toast('Paper imported')}catch{toast('That file is not a valid AskPaperGen paper')}});e.target.value=''};
