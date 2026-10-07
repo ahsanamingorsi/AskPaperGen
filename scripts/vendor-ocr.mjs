@@ -1,9 +1,14 @@
-// Bundles the OCR engine so Scan to Paper works fully offline with no CDN:  node scripts/vendor-ocr.mjs [eng urd ...]
-// Needs Node 18+ and internet once. Then run  python3 scripts/release.py  and deploy.
-import {mkdir,writeFile} from 'node:fs/promises';import {dirname} from 'node:path';
-const J='https://cdn.jsdelivr.net/npm/',L='https://tessdata.projectnaptha.com/4.0.0/',langs=process.argv.slice(2).length?process.argv.slice(2):['eng','urd'];
-const list=[[J+'tesseract.js@5/dist/tesseract.min.js','tesseract.min.js'],[J+'tesseract.js@5/dist/worker.min.js','worker.min.js'],
- ...['tesseract-core.wasm.js','tesseract-core-simd.wasm.js','tesseract-core-lstm.wasm.js','tesseract-core-simd-lstm.wasm.js'].map(f=>[J+'tesseract.js-core@5/'+f,'core/'+f]),
- ...langs.map(l=>[L+l+'.traineddata.gz','lang/'+l+'.traineddata.gz'])],ok=[];
-for(const [u,f] of list){try{const r=await fetch(u);if(!r.ok)throw new Error(r.status);const p='vendor/ocr/'+f;await mkdir(dirname(p),{recursive:true});await writeFile(p,Buffer.from(await r.arrayBuffer()));ok.push(f);console.log('✓',f)}catch(e){console.log('✗',f,e.message)}}
-await writeFile('vendor/ocr/files.json',JSON.stringify(ok));console.log(ok.length+'/'+list.length+' files saved. Now run: python3 scripts/release.py');
+// Bundle a pinned text reader and English/Urdu LSTM language models for offline scanning.
+import {mkdir,writeFile,rename} from 'node:fs/promises';
+import {dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+const J='https://cdn.jsdelivr.net/npm/',version='5.1.1';
+const langs=process.argv.slice(2).length?process.argv.slice(2):['eng','urd'];
+if(langs.some(l=>!/^\w+$/.test(l)))throw new Error('Invalid language code');
+const list=[[J+'tesseract.js@'+version+'/dist/tesseract.min.js','tesseract.min.js'],[J+'tesseract.js@'+version+'/dist/worker.min.js','worker.min.js'],
+ ...['tesseract-core.wasm.js','tesseract-core-simd.wasm.js','tesseract-core-lstm.wasm.js','tesseract-core-simd-lstm.wasm.js'].map(f=>[J+'tesseract.js-core@'+version+'/'+f,'core/'+f]),
+ ...langs.map(l=>[J+'@tesseract.js-data/'+l+'/4.0.0_best_int/'+l+'.traineddata.gz','lang/'+l+'.traineddata.gz'])];
+for(const [url,file] of list){const r=await fetch(url,{signal:AbortSignal.timeout(60000)});if(!r.ok)throw new Error(file+': HTTP '+r.status);const bytes=Buffer.from(await r.arrayBuffer());if(bytes.length<100)throw new Error('Empty OCR asset: '+file);const target=resolve(root,'vendor/ocr',file);await mkdir(dirname(target),{recursive:true});await writeFile(target+'.tmp',bytes);await rename(target+'.tmp',target);console.log('Downloaded',file,bytes.length,'bytes')}
+await writeFile(resolve(root,'vendor/ocr/files.json'),JSON.stringify(list.map(([,file])=>file)));
+console.log('Complete OCR bundle ready. Run node scripts/release.mjs before deploying.');

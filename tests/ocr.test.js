@@ -1,0 +1,20 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const source=fs.readFileSync('js/scan.js','utf8');
+const ctx={LS:{get:()=>({})},fetch:async()=>({ok:false}),document:{},window:{},navigator:{onLine:true},Blob,FormData,AbortController,setTimeout,clearTimeout};
+vm.createContext(ctx);vm.runInContext(fs.readFileSync('js/scan-parser.js','utf8')+'\n'+source.slice(0,source.indexOf('/* ---- UI ---- */'))+';this.Extraction=Extraction;this.OCR_CFG=OCR_CFG;this.imageScale=imageScale;',ctx);
+(async()=>{
+ const modes=[];let terminated=false;
+ const outputs=[{text:'',confidence:0},{text:'Some visible words',confidence:40},{text:'All the clear visible English and Urdu text on this page.',confidence:92},{text:'###???%%%^^^',confidence:99}];
+ ctx.worker={setParameters:async p=>modes.push(p.tessedit_pageseg_mode),recognize:async()=>({data:outputs.shift()}),terminate:async()=>terminated=true};
+ vm.runInContext('mkWorker=async()=>worker;prep=()=>({width:100,height:100});',ctx);
+ const result=await ctx.Extraction.providers.local({width:100,height:100},{mode:'printed',langs:'urd+eng',enh:false});
+ assert.equal(result.confidence,92);assert.deepEqual(modes,['3','6','11','6']);assert(terminated);
+ const payload={items:[{type:'mcq',text:'Capital?',options:['Islamabad','Lahore'],marks:'2'}],meta:{subject:'Urdu',cls:'9'}};
+ ctx.fetch=async()=>({ok:true,json:async()=>payload});ctx.OCR_CFG.provider='endpoint';ctx.OCR_CFG.endpoint='https://ocr.example.test';
+ const parsed=await ctx.Extraction.run({width:100,height:100,toBlob:f=>f(new Blob(['image'],{type:'image/jpeg'}))});
+ assert.equal(parsed.questions[0].type,'mcq');assert.equal(parsed.questions[0].opts[0],'Islamabad');assert.equal(parsed.meta.subject,'Urdu');assert(parsed.text.includes('Capital?'));
+ ctx.OCR_CFG.provider='local';ctx.Extraction.providers.local=async()=>({text:'OK',confidence:90});assert.equal((await ctx.Extraction.run({width:1,height:1})).text,'OK');
+ const scale=ctx.imageScale(6000,4000);assert(6000*scale<=3200);assert(6000*4000*scale*scale<=8000000);assert.equal(ctx.imageScale(2500,1800),1);
+ const inline=vm.runInContext("parseDoc('1. Capital?\\n\u0627\u0644\u0641) A \u0628) B \u062c) C \u062f) D')",ctx);assert.deepEqual(Array.from(inline.items[0].opts),['A','B','C','D']);
+ console.log('PASS OCR layout retries, result selection, worker cleanup, structured endpoint response, short text, image limits and inline Urdu options');
+})().catch(e=>{console.error(e);process.exitCode=1});

@@ -26,7 +26,7 @@ function heading(l){let x,m='';const mk=s=>{const y=s.match(/[\[(]\s*(\d+)\s*(?:
  if(x=l.match(/^(معروضی|موضوعی|کثیر الانتخابی|مختصر سوالات|تفصیلی سوالات)\s*[:\-–]?\s*(.*)$/)){const s=mk(x[2]);return{t:x[1],s,m}}
  return null}
 /* "a) x  b) y  c) z": split a line that holds 2+ ascending option markers */
-function splitOpts(l){const re=/(?:^|\s)\(?([a-dA-D]|الف)\s*[).\-:,]\s+(?=\S)/g,h=[];let m,last=-1;while((m=re.exec(l))){const k=oi(m[1]);if(k>last){h.push({k,s:m.index+m[0].search(/\S/),e:m.index+m[0].length});last=k}}
+function splitOpts(l){const re=/(?:^|\s)\(?([a-dA-D]|الف|ب|ج|د)\s*[).\-:,]\s+(?=\S)/g,h=[];let m,last=-1;while((m=re.exec(l))){const k=oi(m[1]);if(k>last){h.push({k,s:m.index+m[0].search(/\S/),e:m.index+m[0].length});last=k}}
  if(h.length<2)return null;return{pre:l.slice(0,h[0].s).trim(),o:h.map((x,i)=>({k:x.k,t:l.slice(x.e,i+1<h.length?h[i+1].s:undefined).trim()}))}}
 function classify(b){let t=b.t.trim(),m='';const mm=t.match(/[\[(]\s*([0-9٠-٩۰-۹]{1,2})\s*(?:marks?|نمبر(?:ات)?)?\s*[\])]\s*$/i);if(mm){m=toEn(mm[1]);t=t.slice(0,mm.index).trim()}
  const o=(b.o||[]).map(x=>x.trim()),n=o.filter(Boolean).length;let ty='short',sure=false;
