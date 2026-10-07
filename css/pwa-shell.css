@@ -1,0 +1,36 @@
+/* Installed app navigation. Website navigation is unchanged. */
+@media screen{
+ body.pwa-app{--app-rail:232px;margin-left:var(--app-rail);min-height:100dvh}
+ .pwa-app #foot{display:none}
+ .pwa-app nav.pwa-sidebar{position:fixed;inset:12px auto 12px 12px;width:208px;margin:0;padding:22px 14px;display:flex;flex-direction:column;align-items:stretch;gap:26px;z-index:80;border-radius:22px;background:rgba(12,19,34,.97);overflow:auto}
+ .pwa-app nav.pwa-sidebar .logo{margin:0;font-size:17px;gap:7px}
+ .pwa-app nav.pwa-sidebar #burger{display:none}
+ .pwa-app nav.pwa-sidebar .links{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;max-height:none;overflow:visible}
+ .pwa-app nav.pwa-sidebar a.l{padding:12px;text-align:left;justify-content:flex-start;color:#aab6d3;min-height:44px}
+ .pwa-app nav.pwa-sidebar a.l.on{background:rgba(59,155,255,.16);color:#67e8f9;border:1px solid rgba(103,232,249,.2)}
+ .pwa-app nav.pwa-sidebar a.l:hover{color:white;background:rgba(255,255,255,.06)}
+ .pwa-app nav.pwa-sidebar .btn{min-height:44px;width:100%;justify-content:center}
+ .pwa-app .pwa-update{margin-top:16px}
+ .pwa-bottom{display:none}
+ .pwa-app .gen{padding-top:12px;height:calc(100dvh - 12px)}
+ .pwa-app #toast{left:calc(50% + var(--app-rail)/2)}
+ .pwa-app #ubar{left:calc(50% + var(--app-rail)/2);max-width:calc(100vw - var(--app-rail) - 30px)}
+}
+@media screen and (max-width:1100px){
+ body.pwa-app{--app-rail:0px;margin-left:0;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+ .pwa-app nav.pwa-sidebar{display:none}
+ .pwa-app nav.pwa-bottom{position:fixed;top:auto;bottom:0;left:0;right:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:center;padding:10px max(6px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left));z-index:90;border-radius:22px 22px 0 0;background:rgba(12,19,34,.98);border-top:1px solid rgba(103,232,249,.16);box-shadow:0 -8px 30px rgba(0,0,0,.22);overflow:visible}
+ .pwa-bottom .pwa-tab{min-width:0;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:600;color:#93a4c2;text-align:center;border-radius:12px}
+ .pwa-bottom .pwa-tab svg{width:23px;height:23px;flex:none}
+ .pwa-bottom .pwa-tab.on{color:#67e8f9;background:rgba(103,232,249,.06)}
+ .pwa-bottom .pwa-tab:focus-visible{outline:2px solid #67e8f9;outline-offset:2px}
+ .pwa-bottom .pwa-create{position:relative;align-self:center;justify-self:center;width:58px;height:58px;min-height:58px;margin-top:-34px;border-radius:20px;background:linear-gradient(135deg,#22d3ee,#2563eb);color:white;border:5px solid #0c1322;box-shadow:0 6px 20px rgba(37,99,235,.4)}
+ .pwa-bottom .pwa-create svg{width:28px;height:28px}
+ .pwa-bottom .pwa-create span{position:absolute;top:62px;font-size:10px;white-space:nowrap;color:#aab6d3}
+ .pwa-app #toast,.pwa-app #ubar,.pwa-app[data-page=generator] #toast,.pwa-app[data-page=generator] #ubar{bottom:calc(96px + env(safe-area-inset-bottom))}
+ .pwa-app .gen{height:calc(100dvh - 104px - env(safe-area-inset-bottom))}
+}
+@media screen and (max-width:900px){
+ .pwa-app .gen{height:auto;padding-bottom:16px}
+ .pwa-app .tabs{position:sticky;top:0;bottom:auto;left:auto;right:auto;margin:0 0 12px;z-index:20}
+}

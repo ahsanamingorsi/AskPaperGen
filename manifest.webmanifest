@@ -3,7 +3,7 @@
  "name": "AskPaperGen",
  "short_name": "AskPaperGen",
  "description": "Create, format and print professional exam papers.",
- "start_url": "./index.html?source=pwa",
+ "start_url": "./dashboard.html?source=pwa",
  "scope": "./",
  "display": "standalone",
  "background_color": "#070a12",
