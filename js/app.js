@@ -30,17 +30,18 @@ if(ios&&!standalone)setTimeout(()=>ibar('Tap Share, then “Add to Home Screen�
 /* ---- offline, updates ---- */
 const offp=()=>{const p=$('#offp');if(p)p.hidden=navigator.onLine};offp();
 addEventListener('offline',()=>{offp();toast('You are offline — everything still works, and your papers are saved on this device')});addEventListener('online',()=>{offp();toast('Back online')});
-fetch('version.json',{cache:'no-store'}).then(r=>r.json()).then(v=>{const e=$('#ver');if(e)e.textContent='· Version '+v.version+' ('+v.build+')'}).catch(()=>{});
-let swReg=null;
-function ubar(){if($('#ubar'))return;const b=document.createElement('div');b.id='ubar';b.className='glass';b.setAttribute('role','alert');b.innerHTML='<img src="assets/images/logo-mark.png" alt=""><div><b>Update available</b>A new version of AskPaperGen is ready. Your papers are safe.</div><button class="btn p s" id="upd">Update now</button><button class="btn s" id="updx">Later</button>';document.body.append(b);requestAnimationFrame(()=>b.classList.add('on'));
- $('#updx').onclick=()=>{b.classList.remove('on');setTimeout(()=>b.remove(),600)};$('#upd').onclick=()=>{sessionStorage.setItem('apg_upd',1);if(swReg&&swReg.waiting)swReg.waiting.postMessage('SKIP_WAITING');else location.reload()}}
-async function checkUpdates(){if(!swReg)return toast('Updates are checked once the app is served over https');toast('Checking for updates…');try{await swReg.update()}catch{return toast('Could not check — are you offline?')}setTimeout(()=>{if(swReg.waiting)ubar();else toast('You have the latest version')},1800)}
-$('#chkupd')&&($('#chkupd').onclick=checkUpdates);
+let swReg=null,updateCheck=null;
+function ubar(){if($('#ubar'))return;const b=document.createElement('div');b.id='ubar';b.className='glass';b.setAttribute('role','alert');b.innerHTML='<img src="assets/images/logo-mark.png" alt=""><div><b>Update available</b>A new version of AskPaperGen is ready. Your papers are saved on this device.</div><button class="btn p s" id="upd">Update now</button><button class="btn s" id="updx">Later</button>';document.body.append(b);requestAnimationFrame(()=>b.classList.add('on'));
+ $('#updx').onclick=()=>b.remove();$('#upd').onclick=()=>{if(!swReg?.waiting){b.remove();checkUpdates();return}sessionStorage.setItem('apg_upd',1);$('#upd').disabled=true;$('#upd').textContent='Updating...';swReg.waiting.postMessage('SKIP_WAITING')}}
+function watchWorker(worker){if(!worker)return;const changed=()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller)ubar()};worker.addEventListener('statechange',changed);changed()}
+function waitForInstall(worker){return new Promise(resolve=>{let timer;const done=()=>{if(worker.state==='installed'||worker.state==='redundant'){clearTimeout(timer);worker.removeEventListener('statechange',done);resolve(worker.state)}};worker.addEventListener('statechange',done);timer=setTimeout(()=>{worker.removeEventListener('statechange',done);resolve('pending')},60000);done()})}
+async function checkUpdates(manual=true){if(!swReg){if(manual)toast('Update checks are not ready yet. Open the app online over HTTPS.');return}if(swReg.waiting){ubar();return}if(!navigator.onLine){if(manual)toast('Connect to the internet to check for updates');return}if(updateCheck)return updateCheck;
+ updateCheck=(async()=>{if(manual)toast('Checking for updates...');try{await swReg.update();const worker=swReg.installing;const state=worker?await waitForInstall(worker):null;if(swReg.waiting){ubar();return}if(manual)toast(state==='pending'?'Update is still downloading. You will be notified when it is ready.':state==='redundant'?'Update download failed. Please try again.':'You have the latest version')}catch{if(manual)toast('Could not check for updates. Please try again online.')}finally{updateCheck=null}})();return updateCheck}
+$('#chkupd')&&($('#chkupd').onclick=()=>checkUpdates());
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
- addEventListener('load',async()=>{try{swReg=await navigator.serviceWorker.register('sw.js');
-  if(swReg.waiting&&navigator.serviceWorker.controller)ubar();
-  swReg.addEventListener('updatefound',()=>{const w=swReg.installing;w&&w.addEventListener('statechange',()=>{if(w.state==='installed'&&navigator.serviceWorker.controller)ubar()})});
-  const chk=()=>swReg.update().catch(()=>{});document.addEventListener('visibilitychange',()=>!document.hidden&&chk());setInterval(chk,18e5)}catch{}});
- let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(rl||!sessionStorage.getItem('apg_upd'))return;rl=true;location.reload()});
- navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.type==='ready'&&!LS.get('apg_offline',0)){LS.set('apg_offline',1);toast('AskPaperGen is ready to work offline')}});
- if(sessionStorage.getItem('apg_upd')){sessionStorage.removeItem('apg_upd');setTimeout(()=>toast('Updated to the latest version'),600)}}
+ const initUpdates=async()=>{try{swReg=await navigator.serviceWorker.register('sw.js',{updateViaCache:'none'});swReg.addEventListener('updatefound',()=>watchWorker(swReg.installing));watchWorker(swReg.installing);if(swReg.waiting&&navigator.serviceWorker.controller)ubar();checkUpdates(false);navigator.serviceWorker.controller?.postMessage('GET_VERSION')}catch{}};
+ if(document.readyState==='complete')initUpdates();else addEventListener('load',initUpdates,{once:true});
+ const resume=()=>{if(!document.hidden)checkUpdates(false)};document.addEventListener('visibilitychange',resume);addEventListener('pageshow',resume);addEventListener('focus',resume);addEventListener('online',resume);setInterval(resume,300000);
+ let rl=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(rl)return;navigator.serviceWorker.controller?.postMessage('GET_VERSION');if(sessionStorage.getItem('apg_upd')){rl=true;location.reload()}});
+ navigator.serviceWorker.addEventListener('message',e=>{if(e.data?.type==='version'){const el=$('#ver');if(el)el.textContent='Version '+e.data.version+' ('+e.data.build+')'}if(e.data?.type==='ready'&&!LS.get('apg_offline',0)){LS.set('apg_offline',1);toast('AskPaperGen is ready to work offline')}});
+ if(sessionStorage.getItem('apg_upd')){sessionStorage.removeItem('apg_upd');setTimeout(()=>toast('App updated'),600)}}
