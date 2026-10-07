@@ -2,7 +2,7 @@
 let paper=LS.get('apg_paper',null)||fromTpl(BUILTIN[0]);paper.style={...DS,...paper.style};
 function save(){LS.set('apg_paper',paper);const s=$('#saved');s.textContent='● Saved locally';}
 function refresh(){$('#gp').innerHTML=render(paper);$('#rtl').checked=!!paper.style.rtl;save();fit()}
-function fit(){const c=$('.center');const pv=$('#gp .pv');if(!pv)return;const av=(c.clientWidth-68),pw=pv.offsetWidth,sc=Math.min(1,av/pw);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';$('#gp').style.height=sc<1?pv.offsetHeight*sc+'px':'';$('#gp').style.width=sc<1?pw*sc+'px':''}
+function fit(){const c=$('#gen .center'),pv=$('#gp .pv');if(!pv||!c.clientWidth||!pv.offsetWidth)return;const cs=getComputedStyle(c),gp=$('#gp'),gs=getComputedStyle(gp),av=Math.max(1,c.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)-parseFloat(gs.marginLeft)-parseFloat(gs.marginRight)),sc=Math.min(1,av/pv.offsetWidth);pv.style.transform=sc<1?`scale(${sc})`:'';pv.style.transformOrigin='top left';gp.style.height=pv.offsetHeight*sc+'px';gp.style.width=pv.offsetWidth*sc+'px'}
 const TYPES=[['mcq','Add MCQ'],['short','Add Short Question'],['long','Add Long Question'],['section','Add Section'],['table','Add Table'],['image','Add Image'],['instr','Add Instructions']];
 function newItem(t){return({mcq:()=>mcq('',"","","",""),short:()=>sh(''),long:()=>lg('',5,4),section:()=>sec('Section','',''),table:()=>({id:uid(),type:'table',rows:[['Heading','Heading'],['','']],align:'left'}),image:()=>({id:uid(),type:'image',src:''}),instr:()=>ins('')})[t]()}
 function listHTML(){let n=0;const f=(k,v,ph,ta)=>ta?`<textarea dir="auto" data-k="${k}" placeholder="${ph}">${esc(v)}</textarea>`:`<input dir="auto" data-k="${k}" value="${esc(v)}" placeholder="${ph}">`;
@@ -33,9 +33,9 @@ L.addEventListener('dragover',e=>{e.preventDefault();$$('.over',L).forEach(x=>x.
 L.addEventListener('drop',e=>{e.preventDefault();const to=e.target.closest('.item')?.dataset.id;if(!drag||!to||drag===to)return;const a=paper.items.findIndex(i=>i.id===drag),[x]=paper.items.splice(a,1);paper.items.splice(paper.items.findIndex(i=>i.id===to),0,x);drawList();refresh()});
 L.addEventListener('dragend',()=>$$('.item').forEach(x=>{x.classList.remove('over');x.draggable=false}));
 const P=$('.rp');bind(P,()=>paper,r=>{if(r)drawSettings();refresh()});$('#rtl').onchange=e=>{paper.style.rtl=e.target.checked;if(paper.style.rtl&&!/Nastaliq|Naskh/.test(paper.style.font))paper.style.font=SF.find(f=>f[0]==='font')[3].find(o=>o[1]==='Urdu Nastaliq')[0];drawSettings();refresh()};
-$('#togR').onclick=()=>{if(innerWidth<=760)$('.tabs button[data-t=settings]').click();else if(innerWidth<=1100)P.classList.toggle('open');else $('#gen').classList.toggle('hide-r');setTimeout(fit,80)};
-$$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b))});
-addEventListener('resize',fit);drawList();drawSettings();refresh()}
+$('#togR').onclick=()=>{if(innerWidth<=900)$('.tabs button[data-t=settings]').click();else if(innerWidth<=1200)P.classList.toggle('open');else $('#gen').classList.toggle('hide-r');setTimeout(fit,80)};
+$$('.tabs button').forEach(b=>b.onclick=()=>{$('#gen').dataset.t=b.dataset.t;$$('.tabs button').forEach(x=>x.classList.toggle('on',x===b));requestAnimationFrame(fit)});
+addEventListener('resize',fit);if('ResizeObserver' in window)new ResizeObserver(()=>requestAnimationFrame(fit)).observe($('#gen .center'));document.fonts?.ready.then(fit);const close=document.createElement('button');close.className='btn drawer-close';close.textContent='Close Settings';close.onclick=()=>P.classList.remove('open');P.prepend(close);drawList();drawSettings();refresh()}
 function loadPaper(p){paper=p;drawList();drawSettings();refresh()}
 function newPaper(){loadPaper({meta:{...DM},style:{...DS},items:[]})}
 function clearPaper(){if(confirm('Clear the whole paper?'))newPaper()}
