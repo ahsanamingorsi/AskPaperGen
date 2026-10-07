@@ -1,6 +1,6 @@
 /* Quick animated product demo: shown once after the welcome screen, and any time via "Watch demo". */
 (function(){
-const ST=[['Pick a template','Start from one of eight ready-made designs.'],['Add your questions','MCQs, short and long questions with live numbering.'],['Scan to Paper','Snap a photo, extract the text, review and add it.'],['Style it your way','Header designs, colours, your logo and Urdu RTL.'],['Print or save as PDF','Pixel-perfect A4, ready in seconds.']];
+const ST=[['Pick a template','Start from one of eight ready-made designs.'],['Add your questions','MCQs, short and long questions with live numbering.'],['Text Scanner','Snap a photo, extract the text, review and add it.'],['Style it your way','Header designs, colours, your logo and Urdu RTL.'],['Print or save as PDF','Pixel-perfect A4, ready in seconds.']];
 let el=null,tm=[],ty;
 const cls=(...c)=>c.forEach(x=>el&&el.classList.add('r-'+x)),unc=(...c)=>c.forEach(x=>el&&el.classList.remove('r-'+x)),at=(ms,f)=>tm.push(setTimeout(()=>el&&f(),ms));
 function step(i){$('.ik',el).textContent='STEP '+(i+1)+' / 5';const h=$('h2',el),p=$('p',el);h.textContent=ST[i][0];p.textContent=ST[i][1];[h,p].forEach(e=>{e.style.animation='none';e.offsetHeight;e.style.animation=''});$$('.idots i',el).forEach((d,k)=>d.classList.toggle('on',k===i))}

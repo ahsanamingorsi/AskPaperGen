@@ -2,7 +2,7 @@
 // Your API key stays on the server as a secret — never in the website.
 //  1) wrangler init askpapergen-ocr  → paste this file as src/index.js
 //  2) wrangler secret put ANTHROPIC_API_KEY      (optional vars: MODEL, ALLOWED_ORIGIN = https://askpapergen.ahsanamingorsi.com)
-//  3) wrangler deploy  → paste the worker URL into Scan to Paper → Extraction settings → Endpoint.
+//  3) wrangler deploy  → paste the worker URL into Text Scanner → Extraction settings → Endpoint.
 // Contract: POST multipart {image, langs, mode} → JSON {text, meta?, items:[{type,text,sub,options,marks}]}  (`questions` also accepted)
 const PROMPT=(mode,langs)=>`Read this exam page (${mode==='handwriting'?'handwritten':'printed'}; languages: ${langs}) and transcribe it EXACTLY as written. Never correct, rewrite, translate, summarise or invent. Keep Urdu/Arabic-script text and numbers exactly. Structure it as an ordered list: section headings (type section), instructions or reading passages (type instr), and questions (mcq with 4 options, short, long, tf, fill). Do not include question numbers in text. Put marks if written. Also return paper details if present (subject, cls, time, marks, teacher). Reply with JSON only: {"text":"<full transcription>","meta":{"subject":"","cls":""},"items":[{"type":"section|instr|mcq|short|long|tf|fill","text":"","sub":"","options":[],"marks":""}]}`;
 export default{async fetch(req,env){const o=req.headers.get('Origin')||'',al=env.ALLOWED_ORIGIN||'*',cors={'Access-Control-Allow-Origin':al==='*'||o===al?(al==='*'?'*':o):al,'Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'};
