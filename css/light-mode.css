@@ -1,0 +1,34 @@
+@media screen{
+ html[data-theme=light]{color-scheme:light;--navy:#172b4d;--bg:#f8fbff;--bd:#dce5f0;--sh:0 10px 30px rgba(30,64,110,.08);--blue:#2563eb;--cyan:#087e9f}
+ html[data-theme=light] body{background:radial-gradient(900px 500px at 0 0,rgba(37,99,235,.05),transparent),#fff;color:#172b4d}
+ html[data-theme=light] body::before,html[data-theme=light] body::after{display:none}
+ html[data-theme=light] .glass{background:rgba(255,255,255,.96);border-color:#dce5f0;box-shadow:var(--sh)}
+ html[data-theme=light] .btn,html[data-theme=light] .btn.gb{background:#fff;color:#172b4d;border-color:#dce5f0}
+ html[data-theme=light] .btn:hover{background:#eff6ff;box-shadow:0 6px 16px rgba(30,64,110,.12)}
+ html[data-theme=light] .btn.p,html[data-theme=light] .btn.p:hover{background:linear-gradient(120deg,#2563eb,#087e9f);color:white}
+ html[data-theme=light] .btn.c{background:#087e9f;color:white}html[data-theme=light] .btn.d{color:#b91c1c}
+ html[data-theme=light] input,html[data-theme=light] select,html[data-theme=light] textarea,html[data-theme=light] option{background:#fff;color:#172b4d;border-color:#cbd5e1}
+ html[data-theme=light] .wm,html[data-theme=light] .fgrid .logo{color:#172b4d}html[data-theme=light] .wm em{color:#2563eb}
+ html[data-theme=light] nav a.l,html[data-theme=light] .pwa-app nav.pwa-sidebar a.l{color:#475569}
+ html[data-theme=light] nav a.l.on,html[data-theme=light] nav a.l:hover,html[data-theme=light] .pwa-app nav.pwa-sidebar a.l.on,html[data-theme=light] .pwa-app nav.pwa-sidebar a.l:hover{background:#e0f2fe;color:#0369a1;border-color:#bae6fd}
+ html[data-theme=light] .pwa-app nav.pwa-sidebar,html[data-theme=light] .pwa-app nav.pwa-bottom{background:rgba(255,255,255,.98);border-color:#dce5f0;box-shadow:var(--sh)}
+ html[data-theme=light] .pwa-bottom .pwa-tab,html[data-theme=light] .pwa-bottom .pwa-create span{color:#52647d}
+ html[data-theme=light] .pwa-bottom .pwa-tab.on{color:#0369a1;background:#eff6ff}
+ html[data-theme=light] .pwa-bottom .pwa-create{border-color:white;color:white;background:linear-gradient(135deg,#087e9f,#2563eb)}
+ html[data-theme=light] .dashboard-heading p,html[data-theme=light] .dashboard-note,html[data-theme=light] .dashboard-action p,html[data-theme=light] .dashboard-paper p,html[data-theme=light] .hero3 p,html[data-theme=light] .prev p,html[data-theme=light] .step p,html[data-theme=light] .faq p,html[data-theme=light] label.f,html[data-theme=light] .panel h3,html[data-theme=light] .feat span,html[data-theme=light] .tc small,html[data-theme=light] #sm p,html[data-theme=light] .empty,html[data-theme=light] .ticks li{color:#52647d}
+ html[data-theme=light] .dashboard-icon,html[data-theme=light] .dashboard-action>span:last-child,html[data-theme=light] .eyebrow,html[data-theme=light] .tag,html[data-theme=light] .ik,html[data-theme=light] .ti small{color:#0369a1}
+ html[data-theme=light] .item,html[data-theme=light] .chip,html[data-theme=light] .pills span{background:#f8fbff;color:#475569;border-color:#dce5f0}html[data-theme=light] .chip.on{background:#2563eb;color:white}
+ html[data-theme=light] .center,html[data-theme=light] .term .tb{background:#f1f5f9}html[data-theme=light] .term pre{color:#334155}
+ html[data-theme=light] .mb,html[data-theme=light] #sm .mb,html[data-theme=light] #designer,html[data-theme=light] .tabs{background:#fff;border-color:#dce5f0}
+ html[data-theme=light] .tabs .on{background:#2563eb;color:white}html[data-theme=light] .toast{background:#eff6ff;color:#172b4d;border-color:#cbd5e1}
+ html[data-theme=light] footer{background:#f8fbff;color:#52647d;border-color:#dce5f0}html[data-theme=light] .fgrid a,html[data-theme=light] .flink{color:#475569}html[data-theme=light] .fgrid .fh,html[data-theme=light] .fbot a{color:#0369a1}html[data-theme=light] .fbot{border-color:#dce5f0}
+ html[data-theme=light] #ibar div,html[data-theme=light] #ubar div{color:#475569}html[data-theme=light] #ibar b,html[data-theme=light] #ubar b{color:#172b4d}
+ html[data-theme=light] .priv{background:#eff6ff;color:#405675}html[data-theme=light] .warn,html[data-theme=light] .offp{background:#fffbeb;color:#92400e;border-color:#fcd34d}html[data-theme=light] .stat,html[data-theme=light] .g{color:#087443}
+ html[data-theme=light] .phone{background:white;border-color:#cbd5e1}html[data-theme=light] .phone i{background:#dbeafe}
+ html[data-theme=light] .chip2{background:white;color:#172b4d;border-color:#dce5f0}html[data-theme=light] .chip2 b{color:#0369a1}
+ html[data-theme=light] #boot,html[data-theme=light] #intro{background:#f8fbff}html[data-theme=light] .icap p{color:#52647d}html[data-theme=light] .isk,html[data-theme=light] .ifin{background:#fff;color:#172b4d}
+ .theme-toggle{min-height:44px;white-space:nowrap}
+ .pwa-app>.theme-toggle{position:fixed;left:28px;bottom:28px;width:176px;z-index:100;justify-content:center}
+}
+@media screen and (max-width:1100px){.pwa-app>.theme-toggle{left:auto;right:12px;bottom:calc(106px + env(safe-area-inset-bottom));width:auto;box-shadow:var(--sh)}}
+@media print{.theme-toggle{display:none!important}}

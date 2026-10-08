@@ -18,6 +18,7 @@ if(PWA_MODE){
  const scanner=document.createElement('a');scanner.className='l';scanner.href='generator.html?scan=1';scanner.textContent='Text Scanner';$('nav .links').insertBefore(scanner,$('#offp'));
  $$('nav.pwa-sidebar a.l.on').forEach(link=>link.setAttribute('aria-current','page'));
 }
+const themeButton=document.createElement('button');themeButton.className='btn theme-toggle';themeButton.setAttribute('data-theme-toggle','');themeButton.onclick=()=>APGTheme.toggle();if(PWA_MODE)document.body.append(themeButton);else $('nav').insertBefore(themeButton,$('#burger'));APGTheme.apply(document.documentElement.dataset.theme);
 /* ---- landing ---- */
 if(PAGE==='home'){
  const FE=['MCQs','Short Questions','Long Questions','Tables','Images','Urdu RTL Support','Custom Headers','Text Scanner','Print Ready','PDF Export'],FD=['Unlimited options','Quick marks','With answer lines','Editable grids','From your device','Right-to-left layout','Logo & 7 header designs','Photo to question','A4 print CSS','Via browser dialog'];
